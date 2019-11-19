@@ -1,13 +1,21 @@
-/* eslint no-console: 0 */
+#!/usr/bin/env/ node
+
+// TODO: Meox + yargs + component mapping
 const fs = require('fs');
 const { Builder, Capabilities, By } = require('selenium-webdriver');
 const AxeBuilder = require('axe-webdriverjs');
 const { getJunitXml } = require('junit-xml');
 
+if (!process.argv[2]) {
+  console.error('Usage: node cli.js https://www.google.com')
+  process.exit(1);
+}
+
 const pages = [
-  'https://www.patternfly.org/v4'
+  process.argv[2]
 ];
-const violatingPages = {};
+const report = {};
+let exitCode = 0;
 
 let chromeOptions = process.env.CI
   ? { args: ['--headless'] }
@@ -20,15 +28,38 @@ const driver = new Builder()
   .withCapabilities(chromeCapabilities)
   .build();
 
+function buildReport(error) {
+  // We like the `any` field, so add what we want to report to there
+  error.nodes.forEach(node => node.any[0].relatedNodes.push({ html: node.html }));
+
+  return error;
+}
+
+function logError(nodes) {
+  nodes.forEach(error => error.nodes.forEach(node => console.error(JSON.stringify(node.any[0], null, 2))))
+}
+
 function runAxe(pagePath) {
   return new Promise((res, rej) => AxeBuilder(driver)
     .withTags(['wcag2a', 'wcag2aa'])
     .analyze()
     .then(results => {
-      violatingPages[pagePath] = {
-        incomplete: results.incomplete,
-        violations: results.violations
+      report[pagePath] = {
+        incomplete: results.incomplete.map(buildReport),
+        violations: results.violations.map(buildReport)
       };
+      const pageReport = report[pagePath];
+      if (pageReport.incomplete.length > 0 || pageReport.violations.length > 0) {
+        exitCode = 2;
+      }
+      if (pageReport.incomplete.length > 0) {
+        console.error('================= Errors ===================');
+        logError(pageReport.incomplete);
+      }
+      if (pageReport.violations.length > 0) {
+        console.error('================= Failures =================');
+        logError(pageReport.violations);
+      }
     })
     .then(res)
     .catch(rej)
@@ -45,9 +76,8 @@ function crawlItem(item) {
         href = href
           .replace(/#.*/, '') // Remove after # (anchor links)
           .replace(/\/$/, ''); // Remove trailing /
-        if (href.includes('http') // Valid URL
-            && !pages.includes(href) // Hasn't been crawled already
-            && href.startsWith(pages[0]) // On base URL
+        if (!pages.includes(href) // Hasn't been crawled already
+            && (href.startsWith(pages[0]) || href.startsWith('/')) // On base URL
             ) {
           pages.push(href);
         }
@@ -79,7 +109,7 @@ function testPage(pagePath) {
       ])
         .then(() => {
           const elapsed = process.hrtime(startTime);
-          violatingPages[pagePath].time = elapsed[0] + elapsed[1] / 1000000000;
+          report[pagePath].time = elapsed[0] + elapsed[1] / 1000000000;
         })
         .then(res)
         .catch(rej);
@@ -99,7 +129,7 @@ function writeCoverage() {
     fs.mkdirSync('coverage');
   }
 
-  const totalTime = Object.values(violatingPages).reduce((prev, cur) => prev += cur.time, 0);
+  const totalTime = Object.values(report).reduce((prev, cur) => prev += cur.time, 0);
   const testSuiteReport = {
     name: 'aXe A11y Crawler',
     time: totalTime,
@@ -108,7 +138,7 @@ function writeCoverage() {
         name: pages[0],
         timestamp: new Date(),
         time: totalTime,
-        testCases: Object.entries(violatingPages).map(([key, val]) => ({
+        testCases: Object.entries(report).map(([key, val]) => ({
           name: key,
           errors: val.incomplete.map(error => makeMessage('incomplete', error)),
           failures: val.violations.map(error => makeMessage('violation', error)),
@@ -117,7 +147,7 @@ function writeCoverage() {
     ],
   };
   const junitXml = getJunitXml(testSuiteReport);
-  fs.writeFileSync('coverage/results.json', JSON.stringify(violatingPages, null, 2));
+  fs.writeFileSync('coverage/results.json', JSON.stringify(report, null, 2));
   fs.writeFileSync('coverage/coverage.xml', junitXml);
 }
 
@@ -133,6 +163,7 @@ async function loop() {
   }
   await driver.quit();
   writeCoverage();
+  process.exit(exitCode);
 }
 
 loop();

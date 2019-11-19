@@ -1,13 +1,20 @@
 {
-  "name": "@patternfly/a11y",
+  "name": "@patternfly/patternfly-a11y",
   "version": "0.0.1",
   "description": "Accessibility utilities for PatternFly",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --config ./test/app/webpack.config.js --open"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patternfly/patternfly-a11y.git"
+  },
   "author": "Red Hat",
   "license": "MIT",
+  "bin": {
+    "patternfly-a11y": "cli.js"
+  },
   "dependencies": {
     "axe-webdriverjs": "^2.3.0",
     "axios": "^0.19.0",
