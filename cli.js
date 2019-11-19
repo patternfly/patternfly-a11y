@@ -24,7 +24,7 @@ const argv = require('yargs')
   .help()
   .argv;
 
-const jsonFile = path.resolve(__dirname, argv.file);
+const jsonFile = path.resolve(process.cwd(), argv.file);
 
 if (fs.existsSync(jsonFile)) {
   loop({
