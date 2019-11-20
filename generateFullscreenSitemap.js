@@ -1,4 +1,4 @@
-/* eslint no-console: 0 */
+#!/usr/bin/env node
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
