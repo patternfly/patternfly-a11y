@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Accessibility utilities for PatternFly",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,7 @@
   "author": "Red Hat",
   "license": "MIT",
   "bin": {
-    "generate-fullscreen-sitemap": "generateSitemap.js",
+    "generate-fullscreen-sitemap": "generateFullscreenSitemap.js",
     "patternfly-a11y": "cli.js"
   },
   "dependencies": {
