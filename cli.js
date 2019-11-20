@@ -24,11 +24,13 @@ const argv = require('yargs')
   .help()
   .argv;
 
-const jsonFile = path.resolve(process.cwd(), argv.file);
+const jsonFile = argv.file
+  ? path.resolve(process.cwd(), argv.file)
+  : undefined;
 
 if (fs.existsSync(jsonFile)) {
   loop({
-    pages: require(jsonFile),
+    pages: jsonFile ? require(jsonFile) : [argv._],
     crawl: argv.crawl
   });
 }
