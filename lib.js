@@ -146,7 +146,7 @@ async function loop(options) {
     .build();
   pages = options.pages;
   for (let i = 0; i < pages.length; i++) {
-    const page = pages[i];
+    const page =  options.prefix + pages[i];
     console.log(`${i}/${pages.length} ${page}`);
     try {
       await testPage(page, options);

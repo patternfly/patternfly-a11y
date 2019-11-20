@@ -15,6 +15,12 @@ const argv = require('yargs')
     type: 'string',
     demandOption: true
   })
+  .option('prefix', {
+    alias: 'p',
+    describe: 'Prefix for all URLs',
+    type: 'string',
+    default: ''
+  })
   .option('crawl', {
     alias: 'c',
     describe: 'Whether to crawl URLs for more URLs',
@@ -31,6 +37,7 @@ const jsonFile = argv.file
 if (fs.existsSync(jsonFile)) {
   loop({
     pages: jsonFile ? require(jsonFile) : [argv._],
+    prefix: argv.prefix,
     crawl: argv.crawl
   });
 }
