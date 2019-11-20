@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Accessibility utilities for PatternFly",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,7 +17,7 @@
     "patternfly-a11y": "cli.js"
   },
   "dependencies": {
-    "axe-webdriverjs": "^2.3.0",
+    "axe-webdriverjs": "2.3.0-canary.d657746a",
     "axios": "^0.19.0",
     "junit-xml": "^1.2.0",
     "selenium-webdriver": "^4.0.0-alpha.5",
