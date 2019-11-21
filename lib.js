@@ -112,28 +112,61 @@ function makeMessage(type, error) {
   return { message, type: `${type}: ${error.id}` };
 }
 
-function writeCoverage() {
+function makeReport(aggregate, noIncomplete) {
+  const totalTime = Object.values(report).reduce((prev, cur) => prev += cur.time, 0);
+  const suites = [];
+
+  if (aggregate) {
+    const components = {};
+
+    Object.entries(report).forEach(([key, val]) => {
+      const split = key.split('/');
+      const context = split[split.length - 4];
+      const component = split[split.length - 2];
+      components[`${component}-${context}`] = (components[`${component}-${context}`] || []);
+      components[`${component}-${context}`].push({ name: key, ...val });
+    });
+
+    Object.entries(components)
+      .sort((e1, e2) => e1[0].localeCompare(e2[0]))
+      .forEach(([key, val]) => {
+        suites.push({
+          name: key,
+          timestamp: new Date(),
+          time: val.reduce((prev, cur) => prev += cur.time, 0),
+          testCases: Object.values(val).map(testCase => ({
+            name: testCase.name,
+            failures: testCase.violations.map(error => makeMessage('violation', error)),
+            ...(!noIncomplete && { errors: testCase.incomplete.map(error => makeMessage('incomplete', error)) })
+          }))
+        });
+      });
+  }
+  else {
+    suites.push({
+      name: pages[0],
+      timestamp: new Date(),
+      time: totalTime,
+      testCases: Object.entries(report).map(([key, val]) => ({
+        name: key,
+        failures: val.violations.map(error => makeMessage('violation', error)),
+        ...(!noIncomplete && { errors: val.incomplete.map(error => makeMessage('incomplete', error)) })
+      }))
+    })
+  }
+  return {
+    name: 'aXe A11y Crawler',
+    time: totalTime,
+    suites
+  }
+}
+
+function writeCoverage(aggregate, noIncomplete) {
   if (!fs.existsSync('coverage')) {
     fs.mkdirSync('coverage');
   }
 
-  const totalTime = Object.values(report).reduce((prev, cur) => prev += cur.time, 0);
-  const testSuiteReport = {
-    name: 'aXe A11y Crawler',
-    time: totalTime,
-    suites: [
-      {
-        name: pages[0],
-        timestamp: new Date(),
-        time: totalTime,
-        testCases: Object.entries(report).map(([key, val]) => ({
-          name: key,
-          errors: val.incomplete.map(error => makeMessage('incomplete', error)),
-          failures: val.violations.map(error => makeMessage('violation', error)),
-        }))
-      }
-    ],
-  };
+  const testSuiteReport = makeReport(aggregate, noIncomplete);
   const junitXml = getJunitXml(testSuiteReport);
   fs.writeFileSync('coverage/results.json', JSON.stringify(report, null, 2));
   fs.writeFileSync('coverage/coverage.xml', junitXml);
@@ -155,7 +188,7 @@ async function loop(options) {
     }
   }
   await driver.quit();
-  writeCoverage();
+  writeCoverage(options.aggregate, options.noIncomplete);
   process.exit(exitCode);
 }
 

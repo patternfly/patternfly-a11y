@@ -27,6 +27,18 @@ const argv = require('yargs')
     type: 'boolean',
     default: false
   })
+  .option('aggregate', {
+    alias: 'a',
+    describe: 'Whether to aggregate tests by component in XML report',
+    type: 'boolean',
+    default: false
+  })
+  .option('noIncomplete', {
+    alias: 'ni',
+    describe: 'Whether to filter incomplete errors',
+    type: 'boolean',
+    default: false
+  })
   .help()
   .argv;
 
@@ -38,7 +50,9 @@ if (fs.existsSync(jsonFile)) {
   loop({
     pages: jsonFile ? require(jsonFile) : [argv._],
     prefix: argv.prefix,
-    crawl: argv.crawl
+    crawl: argv.crawl,
+    aggregate: argv.aggregate,
+    noIncomplete: argv.noIncomplete
   });
 }
 else {
