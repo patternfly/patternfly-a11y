@@ -26,7 +26,7 @@ function logError(nodes) {
   nodes.forEach(error => error.nodes.forEach(node => console.error(JSON.stringify(node.any[0], null, 2))))
 }
 
-function runAxe(pagePath) {
+function runAxe(pagePath, options) {
   return new Promise((res, rej) => AxeBuilder(driver)
     .withTags(['wcag2a', 'wcag2aa'])
     .analyze()
@@ -39,7 +39,7 @@ function runAxe(pagePath) {
       if (pageReport.incomplete.length > 0 || pageReport.violations.length > 0) {
         exitCode = 2;
       }
-      if (pageReport.incomplete.length > 0) {
+      if (pageReport.incomplete.length > 0 && !options.noIncomplete) {
         console.error('================= Errors ===================');
         logError(pageReport.incomplete);
       }
@@ -90,7 +90,7 @@ function crawlPage() {
 function testPage(pagePath, options) {
   const startTime = process.hrtime();
   return new Promise((res, rej) => driver.get(pagePath).then(() => {
-    const promises = [runAxe(pagePath)];
+    const promises = [runAxe(pagePath, options)];
     if (options.crawl) {
       promises.push(crawlPage());
     }
