@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const { loop, writeCoverage } = require('./lib');
 
-// TODO: Use meow + component mapping
 const argv = require('yargs')
   .command({
     command: '--file <file>',
@@ -33,8 +32,8 @@ const argv = require('yargs')
     type: 'boolean',
     default: false
   })
-  .option('noIncomplete', {
-    alias: 'ni',
+  .option('ignoreIncomplete', {
+    alias: 'iI',
     describe: 'Whether to filter incomplete errors',
     type: 'boolean',
     default: false
@@ -52,7 +51,7 @@ if (fs.existsSync(jsonFile)) {
     prefix: argv.prefix,
     crawl: argv.crawl,
     aggregate: argv.aggregate,
-    noIncomplete: argv.noIncomplete
+    ignoreIncomplete: argv.ignoreIncomplete
   });
 }
 else {

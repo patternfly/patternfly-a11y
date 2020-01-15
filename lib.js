@@ -2,51 +2,55 @@ const fs = require('fs');
 const { Builder, Capabilities, By } = require('selenium-webdriver');
 const AxeBuilder = require('axe-webdriverjs');
 const { getJunitXml } = require('junit-xml');
-
-let pages = [];
-const report = {};
-let exitCode = 0;
+const HTMLReport = require('jasmine-xml2html-converter');
 
 let chromeOptions = process.env.CI
   ? { args: ['--headless'] }
   : { args: ['--incognito', '--window-size=768,1024'] };
-
 const chromeCapabilities = Capabilities.chrome();
 chromeCapabilities.set('chromeOptions', chromeOptions);
-let driver = undefined;
 
-function buildReport(error) {
-  // We like the `any` field, so add what we want to report to there
+// List of pages to crawl
+let pages = [];
+const report = {};
+let exitCode = 0;
+
+function addAnyField(error) {
+  // We like the `node.any` field, so add what we want to report to there
   error.nodes.forEach(node => node.any[0].relatedNodes.push({ html: node.html }));
-
-  return error;
 }
 
 function logError(nodes) {
   nodes.forEach(error => error.nodes.forEach(node => console.error(JSON.stringify(node.any[0], null, 2))))
 }
 
-function runAxe(pagePath, options) {
+function logErrors(pageReport, options) {
+  if (pageReport.incomplete.length > 0 && !options.ignoreIncomplete) {
+    console.error('================= Incomplete ===================');
+    logError(pageReport.incomplete);
+  }
+  if (pageReport.violations.length > 0) {
+    console.error('================= Violations =================');
+    logError(pageReport.violations);
+  }
+}
+
+function runAxe(driver, pagePath, options) {
   return new Promise((res, rej) => AxeBuilder(driver)
     .withTags(['wcag2a', 'wcag2aa'])
     .analyze()
     .then(results => {
-      report[pagePath] = {
-        incomplete: results.incomplete.map(buildReport),
-        violations: results.violations.map(buildReport)
+      results.incomplete.forEach(addAnyField);
+      results.violations.forEach(addAnyField);
+      const pageReport = {
+        incomplete: results.incomplete,
+        violations: results.violations
       };
-      const pageReport = report[pagePath];
       if (pageReport.incomplete.length > 0 || pageReport.violations.length > 0) {
-        exitCode = 2;
+        exitCode = 1;
       }
-      if (pageReport.incomplete.length > 0 && !options.noIncomplete) {
-        console.error('================= Errors ===================');
-        logError(pageReport.incomplete);
-      }
-      if (pageReport.violations.length > 0) {
-        console.error('================= Failures =================');
-        logError(pageReport.violations);
-      }
+      logErrors(pageReport, options);
+      report[pagePath] = pageReport;
     })
     .then(res)
     .catch(rej)
@@ -78,7 +82,7 @@ function crawlItems(items) {
   return Promise.all(items.map(crawlItem));
 }
 
-function crawlPage() {
+function crawlPage(driver) {
   return new Promise((res, rej) => {
     driver.findElements(By.tagName('a'))
       .then(crawlItems)
@@ -87,14 +91,13 @@ function crawlPage() {
   });
 }
 
-function testPage(pagePath, options) {
-  const startTime = process.hrtime();
+function testPage(driver, pagePath, options) {
   return new Promise((res, rej) => driver.get(pagePath).then(() => {
-    const promises = [runAxe(pagePath, options)];
-    if (options.crawl) {
-      promises.push(crawlPage());
-    }
-    Promise.all(promises)
+    const startTime = process.hrtime();
+    Promise.all([
+      runAxe(driver, pagePath, options),
+      ...(options.crawl ? [crawlPage(driver)] : [])
+    ])
       .then(() => {
         const elapsed = process.hrtime(startTime);
         report[pagePath].time = elapsed[0] + elapsed[1] / 1000000000;
@@ -105,26 +108,27 @@ function testPage(pagePath, options) {
   );
 }
 
-function makeMessage(type, error) {
-  let message = '';
-  error.nodes.forEach(node => message += JSON.stringify(node.any[0], null, 2) + '\n');
+function makeReportMessage(type, error) {
+  const messages = error.nodes.map(node => node.any[0]);
 
-  return { message, type: `${type}: ${error.id}` };
+  return { message: JSON.stringify(messages, null, 2), type: `${type}: ${error.id}` };
 }
 
-function makeReport(aggregate, noIncomplete) {
+function makeReport(aggregate, ignoreIncomplete) {
   const totalTime = Object.values(report).reduce((prev, cur) => prev += cur.time, 0);
   const suites = [];
 
   if (aggregate) {
+    // { "aboutmodalbox-": { name: url, incomplete: [], violations: [] } }
     const components = {};
 
     Object.entries(report).forEach(([key, val]) => {
       const split = key.split('/');
       const context = split[split.length - 4];
       const component = split[split.length - 2];
-      components[`${component}-${context}`] = (components[`${component}-${context}`] || []);
-      components[`${component}-${context}`].push({ name: key, ...val });
+      const name = `${component}-${context}`;
+      components[name] = (components[name] || []);
+      components[name].push({ name: key, ...val });
     });
 
     Object.entries(components)
@@ -136,8 +140,8 @@ function makeReport(aggregate, noIncomplete) {
           time: val.reduce((prev, cur) => prev += cur.time, 0),
           testCases: Object.values(val).map(testCase => ({
             name: testCase.name,
-            failures: testCase.violations.map(error => makeMessage('violation', error)),
-            ...(!noIncomplete && { errors: testCase.incomplete.map(error => makeMessage('incomplete', error)) })
+            failures: testCase.violations.map(error => makeReportMessage('violation', error)),
+            ...(!ignoreIncomplete && { errors: testCase.incomplete.map(error => makeReportMessage('incomplete', error)) })
           }))
         });
       });
@@ -149,10 +153,10 @@ function makeReport(aggregate, noIncomplete) {
       time: totalTime,
       testCases: Object.entries(report).map(([key, val]) => ({
         name: key,
-        failures: val.violations.map(error => makeMessage('violation', error)),
-        ...(!noIncomplete && { errors: val.incomplete.map(error => makeMessage('incomplete', error)) })
+        failures: val.violations.map(error => makeReportMessage('violation', error)),
+        ...(!ignoreIncomplete && { errors: val.incomplete.map(error => makeReportMessage('incomplete', error)) })
       }))
-    })
+    });
   }
   return {
     name: 'aXe A11y Crawler',
@@ -161,34 +165,72 @@ function makeReport(aggregate, noIncomplete) {
   }
 }
 
-function writeCoverage(aggregate, noIncomplete) {
+function writeConsoleError(testSuiteReport) {
+  const suites = Object.values(testSuiteReport.suites)
+    .filter(suite => {
+      for (let testCase of suite.testCases) {
+        if (testCase.failures.length > 0) {
+          return true;
+        }
+        if (testCase.errors && testCase.errors.length > 0) {
+          return true;
+        }
+      }
+      return false;
+    });
+  if (suites.length > 0) {
+    console.log('\nReport summary');
+    suites.forEach(suite => {
+      console.error(`================= ${suite.name} ===================`);
+      suite.testCases.forEach(testCase => {
+        if (testCase.errors && testCase.errors.length > 0) {
+          console.error(`Incomplete for ${testCase.name}`);
+          testCase.errors.forEach(error => console.error(error.message));
+        }
+        if (testCase.failures.length > 0) {
+          console.error(`Violations for ${testCase.name}`);
+          testCase.failures.forEach(error => console.error(error.message));
+        }
+      });
+    });
+  }
+}
+
+function writeCoverage(aggregate, ignoreIncomplete) {
   if (!fs.existsSync('coverage')) {
     fs.mkdirSync('coverage');
   }
 
-  const testSuiteReport = makeReport(aggregate, noIncomplete);
+  const testSuiteReport = makeReport(aggregate, ignoreIncomplete);
   const junitXml = getJunitXml(testSuiteReport);
+
+  writeConsoleError(testSuiteReport);
   fs.writeFileSync('coverage/results.json', JSON.stringify(report, null, 2));
   fs.writeFileSync('coverage/coverage.xml', junitXml);
+  console.log = () => {}; // Stop console.log at jasmine-xml2html-converter.js:176
+  new HTMLReport().from('coverage/coverage.xml', {
+    reportTitle: 'aXe A11y Crawler',
+    outputPath: 'coverage'
+  });
 }
 
 async function loop(options) {
-  driver = new Builder()
+  const driver = new Builder()
     .forBrowser('chrome')
     .withCapabilities(chromeCapabilities)
     .build();
   pages = options.pages;
   for (let i = 0; i < pages.length; i++) {
-    const page =  options.prefix + pages[i];
-    console.log(`${i}/${pages.length} ${page}`);
+    const page = `${options.prefix}${pages[i]}`;
+    console.log(`${i + 1}/${pages.length} ${page}`);
     try {
-      await testPage(page, options);
+      await testPage(driver, page, options);
     } catch(err) {
       console.error(`Problem testing ${page}: ${err}`);
     }
   }
   await driver.quit();
-  writeCoverage(options.aggregate, options.noIncomplete);
+  writeCoverage(options.aggregate, options.ignoreIncomplete);
   process.exit(exitCode);
 }
 
