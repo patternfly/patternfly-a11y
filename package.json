@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Accessibility utilities for PatternFly",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "axe-webdriverjs": "^2.3.0",
-    "jasmine-xml2html-converter": "0.0.2",
     "junit-xml": "^1.2.0",
     "selenium-webdriver": "^4.0.0-alpha.5",
+    "xmldoc": "^1.1.2",
     "yargs": "^15.0.2"
   },
   "devDependencies": {

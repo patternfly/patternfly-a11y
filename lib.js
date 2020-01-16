@@ -2,7 +2,7 @@ const fs = require('fs');
 const { Builder, Capabilities, By } = require('selenium-webdriver');
 const AxeBuilder = require('axe-webdriverjs');
 const { getJunitXml } = require('junit-xml');
-const HTMLReport = require('jasmine-xml2html-converter');
+const { getHTMLReport } = require('./htmlReport');
 
 let chromeOptions = process.env.CI
   ? { args: ['--headless'] }
@@ -210,15 +210,12 @@ function writeCoverage(aggregate, ignoreIncomplete) {
 
   const testSuiteReport = makeReport(aggregate, ignoreIncomplete);
   const junitXml = getJunitXml(testSuiteReport);
+  const htmlReport = getHTMLReport(junitXml, { reportTitle: 'aXe A11y Crawler' });
 
   writeConsoleError(testSuiteReport);
   fs.writeFileSync('coverage/results.json', JSON.stringify(report, null, 2));
   fs.writeFileSync('coverage/coverage.xml', junitXml);
-  console.log = () => {}; // Stop console.log at jasmine-xml2html-converter.js:176
-  new HTMLReport().from('coverage/coverage.xml', {
-    reportTitle: 'aXe A11y Crawler',
-    outputPath: 'coverage'
-  });
+  fs.writeFileSync('coverage/report.html', htmlReport);
 }
 
 async function loop(options) {
