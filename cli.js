@@ -32,9 +32,15 @@ const argv = require('yargs')
     type: 'boolean',
     default: false
   })
+  .option('ignore', {
+    alias: 'i',
+    describe: 'Comma-seperated list of errors to ignore by id',
+    type: 'string',
+    default: ''
+  })
   .option('ignoreIncomplete', {
     alias: 'iI',
-    describe: 'Whether to filter incomplete errors',
+    describe: 'Whether to ignore incomplete errors',
     type: 'boolean',
     default: false
   })
@@ -51,6 +57,7 @@ if (fs.existsSync(jsonFile)) {
     prefix: argv.prefix,
     crawl: argv.crawl,
     aggregate: argv.aggregate,
+    ignore: argv.ignore,
     ignoreIncomplete: argv.ignoreIncomplete
   });
 }

@@ -15,16 +15,20 @@ let pages = [];
 const report = {};
 let exitCode = 0;
 
-function addAnyField(error) {
-  // We like the `node.any` field, so add what we want to report to there
-  error.nodes.forEach(node => node.any[0].relatedNodes.push({ html: node.html }));
-}
+function filterError(error, options) {
+  const ignored = options.ignore.split(',');
+  if (ignored.includes(error.id)) {
+    console.log('Ignored', error.id);
+    return false;
+  }
 
-function logError(nodes) {
-  nodes.forEach(error => error.nodes.forEach(node => console.error(JSON.stringify(node.any[0], null, 2))))
+  return true;
 }
 
 function logErrors(pageReport, options) {
+  const logError = nodes => nodes
+    .filter(error => filterError(error, options))
+    .forEach(error => error.nodes.forEach(node => console.error(JSON.stringify(node.any[0], null, 2))));
   if (pageReport.incomplete.length > 0 && !options.ignoreIncomplete) {
     console.error('================= Incomplete ===================');
     logError(pageReport.incomplete);
@@ -40,11 +44,14 @@ function runAxe(driver, pagePath, options) {
     .withTags(['wcag2a', 'wcag2aa'])
     .analyze()
     .then(results => {
+      // We like the `node.any` field, so add what we want to report to there
+      const addAnyField = error => error.nodes.forEach(node => node.any[0].relatedNodes.push({ html: node.html }));
       results.incomplete.forEach(addAnyField);
       results.violations.forEach(addAnyField);
+
       const pageReport = {
-        incomplete: results.incomplete,
-        violations: results.violations
+        incomplete: results.incomplete.filter(error => filterError(error, options)),
+        violations: results.violations.filter(error => filterError(error, options))
       };
       if (pageReport.incomplete.length > 0 || pageReport.violations.length > 0) {
         exitCode = 1;
