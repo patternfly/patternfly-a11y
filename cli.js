@@ -38,6 +38,12 @@ const argv = require('yargs')
     type: 'string',
     default: ''
   })
+  .option('skip', {
+    alias: 's',
+    describe: 'Regex of pages to skip',
+    type: 'string',
+    default: ''
+  })
   .option('ignoreIncomplete', {
     alias: 'iI',
     describe: 'Whether to ignore incomplete errors',
@@ -54,6 +60,7 @@ const jsonFile = argv.file
 if (fs.existsSync(jsonFile)) {
   loop({
     pages: jsonFile ? require(jsonFile) : [argv._],
+    skipPages: argv.skip,
     prefix: argv.prefix,
     crawl: argv.crawl,
     aggregate: argv.aggregate,

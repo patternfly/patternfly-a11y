@@ -224,7 +224,11 @@ async function loop(options) {
     .withCapabilities(chromeCapabilities)
     .build();
   pages = options.pages;
+  const skipRegex = new RegExp(options.skip);
   for (let i = 0; i < pages.length; i++) {
+    if (options.skip && skipRegex.test(pages[i])) {
+      continue;
+    }
     const page = `${options.prefix}${pages[i]}`;
     console.log(`${i + 1}/${pages.length} ${page}`);
     try {
