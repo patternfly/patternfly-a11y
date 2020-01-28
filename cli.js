@@ -60,7 +60,7 @@ const jsonFile = argv.file
 if (fs.existsSync(jsonFile)) {
   loop({
     pages: jsonFile ? require(jsonFile) : [argv._],
-    skipPages: argv.skip,
+    skipRegex: argv.skip,
     prefix: argv.prefix,
     crawl: argv.crawl,
     aggregate: argv.aggregate,

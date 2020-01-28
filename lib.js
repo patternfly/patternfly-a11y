@@ -224,9 +224,9 @@ async function loop(options) {
     .withCapabilities(chromeCapabilities)
     .build();
   pages = options.pages;
-  const skipRegex = new RegExp(options.skip);
+  const skipRegex = new RegExp(options.skipRegex);
   for (let i = 0; i < pages.length; i++) {
-    if (options.skip && skipRegex.test(pages[i])) {
+    if (options.skipRegex && skipRegex.test(pages[i])) {
       continue;
     }
     const page = `${options.prefix}${pages[i]}`;
