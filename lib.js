@@ -30,12 +30,12 @@ function logErrors(pageReport, options) {
     .filter(error => filterError(error, options))
     .forEach(error => error.nodes.forEach(node => console.error(JSON.stringify(node.any[0], null, 2))));
   if (pageReport.incomplete.length > 0 && !options.ignoreIncomplete) {
-    console.error('================= Incomplete ===================');
-    logError(pageReport.incomplete);
+    // console.error('================= Incomplete ===================');
+    // logError(pageReport.incomplete);
   }
   if (pageReport.violations.length > 0) {
-    console.error('================= Violations =================');
-    logError(pageReport.violations);
+    // console.error('================= Violations =================');
+    // logError(pageReport.violations);
   }
 }
 
@@ -45,7 +45,9 @@ function runAxe(driver, pagePath, options) {
     .analyze()
     .then(results => {
       // We like the `node.any` field, so add what we want to report to there
-      const addAnyField = error => error.nodes.forEach(node => node.any[0].relatedNodes.push({ html: node.html }));
+      const addAnyField = error => error.nodes
+        .filter(node => node.any && node.any.length > 0)
+        .forEach(node => node.any[0].relatedNodes.push({ html: node.html }));
       results.incomplete.forEach(addAnyField);
       results.violations.forEach(addAnyField);
 
@@ -64,7 +66,7 @@ function runAxe(driver, pagePath, options) {
   );
 }
 
-function crawlItem(item) {
+function crawlItem(item, options) {
   return new Promise((res, rej) => {
     item.getAttribute('href')
       .then(href => {
@@ -73,10 +75,9 @@ function crawlItem(item) {
         }
         href = href
           .replace(/#.*/, '') // Remove after # (anchor links)
-          .replace(/\/$/, ''); // Remove trailing /
-        if (!pages.includes(href) // Hasn't been crawled already
-            && (href.startsWith(pages[0]) || href.startsWith('/')) // On base URL
-            ) {
+          .replace(/\/$/, '') // Remove trailing /
+          .replace(options.prefix, '');
+        if (!pages.includes(href) && href.startsWith('/')) {
           pages.push(href);
         }
       })
@@ -85,14 +86,14 @@ function crawlItem(item) {
   });
 }
 
-function crawlItems(items) {
-  return Promise.all(items.map(crawlItem));
+function crawlItems(items, options) {
+  return Promise.all(items.map(item => crawlItem(item, options)));
 }
 
-function crawlPage(driver) {
+function crawlPage(driver, options) {
   return new Promise((res, rej) => {
     driver.findElements(By.tagName('a'))
-      .then(crawlItems)
+      .then(items => crawlItems(items, options))
       .then(res)
       .catch(rej);
   });
@@ -103,7 +104,7 @@ function testPage(driver, pagePath, options) {
     const startTime = process.hrtime();
     Promise.all([
       runAxe(driver, pagePath, options),
-      ...(options.crawl ? [crawlPage(driver)] : [])
+      ...(options.crawl ? [crawlPage(driver, options)] : [])
     ])
       .then(() => {
         const elapsed = process.hrtime(startTime);

@@ -11,8 +11,7 @@ const argv = require('yargs')
   .option('file', {
     alias: 'f',
     describe: 'JSON file of URLs to audit',
-    type: 'string',
-    demandOption: true
+    type: 'string'
   })
   .option('prefix', {
     alias: 'p',
@@ -57,7 +56,7 @@ const jsonFile = argv.file
   ? path.resolve(process.cwd(), argv.file)
   : undefined;
 
-if (fs.existsSync(jsonFile)) {
+if (fs.existsSync(jsonFile) || argv._) {
   loop({
     pages: jsonFile ? require(jsonFile) : [argv._],
     skipRegex: argv.skip,
