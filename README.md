@@ -35,11 +35,13 @@ Options:
 
 `npm i @patternfly/patternfly-a11y`
 
+then
+
 `node_modules/.bin/patternfly-a11y --file [json-list-of-urls]`
 
 OR
 
-`node_modules/.bin/patternfly-a11y --prefix https://localhost:9000 --crawl /dashboard`
+`node_modules/.bin/patternfly-a11y --prefix http://localhost:9000 --crawl /dashboard`
 
 Currently this tool is rough around the edges. It could be extended to run tests in parallel or on browserstack, do better reporting, allow a plugable version of axe-core, have better error handling (browser tests are always finnicky...), more report formats, you get the idea.
 
