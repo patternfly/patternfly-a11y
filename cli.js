@@ -7,24 +7,24 @@ const { writeCoverage } = require('./lib/reporter');
 
 program
   .version(require('./package.json').version)
-  .arguments('<urls or urlFile>')
+  .arguments('<urls or urlFile> [otherUrls...]')
   .description('Test URL(s) using puppeteer and axe.')
   .option('-p, --prefix <prefix>', 'Prefix for listed urls (like https://localhost:9000)')
   .option('-c, --crawl', 'Whether to crawl URLs for more URLs', false)
-  .option('-s, --skip', 'Regex of pages to skip', '')
-  .option('-a, --aggregate', 'Whether to aggregate tests by component (by splitting URL) in XML report')
+  .option('-s, --skip', 'Regex of pages to skip')
+  .option('-a, --aggregate', 'Whether to aggregate tests by component (by splitting URL) in XML report', false)
   .option('-ir, --ignore-rules <rules>', 'Comma-seperated list of error ids to ignore', 'color-contrast')
   .option('-iI, --ignore-incomplete', 'Whether to ignore incomplete errors from axe', true)
   .action(runPuppeteer);
 
-function runPuppeteer(urls, options) {
+function runPuppeteer(urls, otherUrls, options) {
   // Check if urls is a JSON file which is a list of URLs
-  let pages = []; // string[]
+  const pages = otherUrls; // string[]
   try {
-    pages = require(urls);
+    pages.push(...require(urls));
   }
   catch (exception) {
-    pages = urls.split(',');
+    pages.push(...urls.split(','));
   }
 
   const writeCoverageFn = () => writeCoverage(options.aggregate, options.ignoreIncomplete);
