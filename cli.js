@@ -1,77 +1,42 @@
 #!/usr/bin/env node
-const path = require('path');
-const fs = require('fs');
-const { loop, writeCoverage } = require('./lib');
+const { Command } = require('commander');
+const program = new Command();
 
-const argv = require('yargs')
-  .command({
-    command: '--file <file>',
-    desc: 'Audit a list of URLs in JSON file',
-  })
-  .option('file', {
-    alias: 'f',
-    describe: 'JSON file of URLs to audit',
-    type: 'string'
-  })
-  .option('prefix', {
-    alias: 'p',
-    describe: 'Prefix for all URLs',
-    type: 'string',
-    default: ''
-  })
-  .option('crawl', {
-    alias: 'c',
-    describe: 'Whether to crawl URLs for more URLs',
-    type: 'boolean',
-    default: false
-  })
-  .option('aggregate', {
-    alias: 'a',
-    describe: 'Whether to aggregate tests by component in XML report',
-    type: 'boolean',
-    default: false
-  })
-  .option('ignore', {
-    alias: 'i',
-    describe: 'Comma-seperated list of errors to ignore by id',
-    type: 'string',
-    default: ''
-  })
-  .option('skip', {
-    alias: 's',
-    describe: 'Regex of pages to skip',
-    type: 'string',
-    default: ''
-  })
-  .option('ignoreIncomplete', {
-    alias: 'iI',
-    describe: 'Whether to ignore incomplete errors',
-    type: 'boolean',
-    default: false
-  })
-  .help()
-  .argv;
+const { testUrls } = require('./lib/testUrls');
+const { writeCoverage } = require('./lib/reporter');
 
-const jsonFile = argv.file
-  ? path.resolve(process.cwd(), argv.file)
-  : undefined;
+program
+  .version(require('./package.json').version)
+  .arguments('<urls or urlFile>')
+  .description('Test URL(s) using puppeteer and axe.')
+  .option('-p, --prefix <prefix>', 'Prefix for listed urls (like https://localhost:9000)')
+  .option('-c, --crawl', 'Whether to crawl URLs for more URLs', false)
+  .option('-s, --skip', 'Regex of pages to skip', '')
+  .option('-a, --aggregate', 'Whether to aggregate tests by component (by splitting URL) in XML report')
+  .option('-ir, --ignore-rules <rules>', 'Comma-seperated list of error ids to ignore', 'color-contrast')
+  .option('-iI, --ignore-incomplete', 'Whether to ignore incomplete errors from axe', true)
+  .action(runPuppeteer);
 
-if (fs.existsSync(jsonFile) || argv._) {
-  loop({
-    pages: jsonFile ? require(jsonFile) : [argv._],
-    skipRegex: argv.skip,
-    prefix: argv.prefix,
-    crawl: argv.crawl,
-    aggregate: argv.aggregate,
-    ignore: argv.ignore,
-    ignoreIncomplete: argv.ignoreIncomplete
+function runPuppeteer(urls, options) {
+  // Check if urls is a JSON file which is a list of URLs
+  let pages = []; // string[]
+  try {
+    pages = require(urls);
+  }
+  catch (exception) {
+    pages = urls.split(',');
+  }
+
+  const writeCoverageFn = () => writeCoverage(options.aggregate, options.ignoreIncomplete);
+
+  testUrls(pages, options)
+    .then(writeCoverageFn);
+
+  process.on('SIGINT', () => {
+    console.log('Writing coverage\n');
+    writeCoverageFn();
+    process.exit(1);
   });
 }
-else {
-  console.error('Please give a valid JSON file');
-}
 
-process.on('SIGINT', () => {
-  writeCoverage();
-  process.exit(1);
-});
+program.parse(process.argv);
