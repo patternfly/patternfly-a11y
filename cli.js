@@ -27,15 +27,14 @@ function runPuppeteer(urls, otherUrls, options) {
     pages.push(...urls.split(','));
   }
 
-  const writeCoverageFn = () => writeCoverage(options.aggregate, options.ignoreIncomplete);
+  const writeCoverageFn = () => writeCoverage(options.aggregate);
 
   testUrls(pages, options)
-    .then(writeCoverageFn);
+    .then(() => process.exit(writeCoverageFn()));
 
   process.on('SIGINT', () => {
     console.log('Writing coverage\n');
-    writeCoverageFn();
-    process.exit(1);
+    process.exit(writeCoverageFn());
   });
 }
 
