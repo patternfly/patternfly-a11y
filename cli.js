@@ -23,7 +23,7 @@ function runPuppeteer(urls, otherUrls, options) {
   // Check if urls is a JSON file which is a list of URLs
   const pages = otherUrls; // string[]
   try {
-    pages.push(...require(urls));
+    pages.push(...require(path.resolve(process.cwd(), urls)));
   }
   catch (exception) {
     pages.push(...urls.split(','));
