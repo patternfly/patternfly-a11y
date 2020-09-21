@@ -1,10 +1,17 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
-    "start": "webpack-dev-server --config ./test/app/webpack.config.js --open"
+    "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
+    "report": "yarn copy && webpack-dev-server --config ./report/webpack.config.js --open",
+    "build": "yarn copy && webpack --config ./report/webpack.config.js",
+    "clean": "rm -rf coverage && rm -rf ./report/coverage",
+    "copy": "rm -rf ./report/coverage && cp -R ./coverage ./report/coverage",
+    "test:pf": "yarn clean && ./cli.js --prefix https://patternfly-react.surge.sh --aggregate test/fullscreenPages.json",
+    "test:os": "yarn clean && ./cli.js --config test/os-config.js",
+    "test:koku": "yarn clean && ./cli.js --config test/koku-config.js"
   },
   "repository": {
     "type": "git",
@@ -16,11 +23,12 @@
     "patternfly-a11y": "cli.js"
   },
   "dependencies": {
-    "axe-core": "^3.5.4",
+    "@patternfly/react-charts": "^6.9.6",
+    "axe-core": "^3.5.5",
     "commander": "^5.1.0",
+    "junit-xml": "^1.2.0",
     "puppeteer": "^3.3.0",
     "puppeteer-cluster": "^0.21.0",
-    "junit-xml": "^1.2.0",
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {
@@ -29,6 +37,7 @@
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "chromedriver": "^78.0.1",
+    "copy-webpack-plugin": "^6.1.0",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
