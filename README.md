@@ -77,9 +77,14 @@ async function waitForSpinner(page) {
   });
 }
 module.exports = {
+  // the root of the URLs to test
   prefix: "https://my-website.com",
+  // If you need to authenticate/login you can specify a function here
   auth: login,
+  // if there are common elements to wait for on pages to test can specify here
   waitFor: waitForSpinner,
+  // if you want axe to only test a subset of the document you can specify it here, defaults to the entire document
+  context: 'document.getElementById("page")',
   // we define our own list of URLs to test
   crawl: false,
   // urls can contain strings or objects for more control
