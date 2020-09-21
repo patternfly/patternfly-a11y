@@ -23,7 +23,7 @@ let Dash = (props: {path?: string}) => (
   <PageLayout>
     <PageSection>
       <h1>This is dashboard content</h1>
-      <Gallery gutter="md">
+      <Gallery hasGutter>
         {Array.apply(0, Array(10)).map((x, i) => (
           <GalleryItem key={i}>
             <Card>
