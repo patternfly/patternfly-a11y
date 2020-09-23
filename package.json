@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
@@ -47,7 +47,7 @@
     "@types/react-dom": "^16.9.4",
     "webpack-dev-server": "^3.11.0"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   }
