@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
@@ -36,8 +36,6 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
     "chromedriver": "^78.0.1",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
@@ -48,5 +46,9 @@
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "webpack-dev-server": "^3.11.0"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
