@@ -44,9 +44,8 @@ program
     "document"
   )
   .option(
-    "-pfr, --pf-report",
-    "Builds out the full PatternFly a11y report into coverage/dist",
-    true
+    "--no-pf-report",
+    "Whether to build out the full PatternFly a11y report into coverage/dist"
   )
   .action(runPuppeteer);
 
@@ -81,6 +80,8 @@ function runPuppeteer(urls, otherUrls, options) {
     const exitCode = writeCoverageFn();
     if (options.pfReport) {
       buildPfReport(() => process.exit(exitCode));
+    } else {
+      process.exit(exitCode)
     }
   }
   );
