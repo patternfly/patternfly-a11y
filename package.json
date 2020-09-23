@@ -1,15 +1,14 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
     "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
-    "report": "yarn copy && webpack-dev-server --config ./report/webpack.config.js --open",
-    "build": "yarn copy && webpack --config ./report/webpack.config.js",
+    "report": "webpack-dev-server --config ./report/webpack.config.js --open",
+    "build": "webpack --config ./report/webpack.config.js",
     "clean": "rm -rf coverage && rm -rf ./report/coverage",
-    "copy": "rm -rf ./report/coverage && cp -R ./coverage ./report/coverage",
-    "test:pf": "yarn clean && ./cli.js --prefix https://patternfly-react.surge.sh --aggregate test/fullscreenPages.json",
+    "test:pf": "yarn clean && ./cli.js test/fullscreenPages.json --prefix https://www.patternfly.org/2020.11 --aggregate --ignore-incomplete --ignore-rules color-contrast,scrollable-region-focusable --skip \"charts|virtualizedtable/selectable\"",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
     "test:koku": "yarn clean && ./cli.js --config test/koku-config.js"
   },
@@ -24,6 +23,7 @@
   },
   "dependencies": {
     "@patternfly/react-charts": "^6.9.6",
+    "@welldone-software/why-did-you-render": "^4.3.2",
     "axe-core": "^3.5.5",
     "commander": "^5.1.0",
     "junit-xml": "^1.2.0",

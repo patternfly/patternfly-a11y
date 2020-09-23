@@ -4,7 +4,7 @@ const { Command } = require("commander");
 const program = new Command();
 
 const { testUrls } = require("./lib/testUrls");
-const { writeCoverage } = require("./lib/reporter");
+const { writeCoverage, buildPfReport } = require("./lib/reporter");
 
 program
   .version(require("./package.json").version)
@@ -16,7 +16,7 @@ program
     "Prefix for listed urls (like https://localhost:9000)"
   )
   .option("-cr, --crawl", "Whether to crawl URLs for more URLs", false)
-  .option("-s, --skip", "Regex of pages to skip")
+  .option("-s, --skip <regex>", "Regex of pages to skip")
   .option(
     "-a, --aggregate",
     "Whether to aggregate tests by component (by splitting URL) in XML report",
@@ -42,6 +42,11 @@ program
     "-ctx, --context <context>",
     'Axe: Context to run in, defaults to document, can be set to a different selector, i.e. document.getElementById("content")',
     "document"
+  )
+  .option(
+    "-pfr, --pf-report",
+    "Builds out the full PatternFly a11y report into coverage/dist",
+    true
   )
   .action(runPuppeteer);
 
@@ -72,8 +77,12 @@ function runPuppeteer(urls, otherUrls, options) {
   const writeCoverageFn = () =>
     writeCoverage(options.aggregate, options.screenshots);
 
-  testUrls(pages && pages.length ? pages : options.urls, options).then(() =>
-    process.exit(writeCoverageFn())
+  testUrls(pages && pages.length ? pages : options.urls, options).then(() => {
+    const exitCode = writeCoverageFn();
+    if (options.pfReport) {
+      buildPfReport(() => process.exit(exitCode));
+    }
+  }
   );
 
   process.on("SIGINT", () => {

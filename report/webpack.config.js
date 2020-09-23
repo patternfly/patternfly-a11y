@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -6,15 +7,18 @@ module.exports = {
   entry: __dirname + '/src/index.tsx',
   devtool: 'eval-cheap-source-map',
   output: {
-    path: __dirname + '/dist',
+    path: path.resolve(process.cwd() + '/coverage/dist'),
     filename: 'bundle.js'
+  },
+  resolve: {
+    alias: {
+      '@coverage': path.resolve(process.cwd(), 'coverage/'),
+      '@app': path.resolve(__dirname, 'src/app/')
+    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.json']
   },
   devServer: {
     historyApiFallback: true,
-  },
-  resolve: {
-    // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: ['.ts', '.tsx', '.js']
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -25,7 +29,8 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: 'coverage/screenshots', to: 'coverage/screenshots' }
+        { from: `${process.cwd()}/coverage/screenshots`, to: `coverage/screenshots` },
+        { from: `${process.cwd()}/coverage/results.json`, to: `coverage/results.json` }
       ],
     }),
   ],
