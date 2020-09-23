@@ -6,6 +6,7 @@ It outputs a coverage directory with:
   - report.json: full axe output per-url
   - report.xml: junit coverage grouped into test cases
   - report.html: more readable html report of report.xml
+  - dist: contains the webpack output for the full a11y report
 
 ## Usage
 
@@ -13,7 +14,7 @@ It outputs a coverage directory with:
 patternfly-a11y [command]
 
 Commands:
-  patternfly-a11y --file <file>  Audit a list of URLs in JSON file
+  patternfly-a11y <file>  Audit a list of URLs in JSON file
 
 Options:
   -V, --version                output the version number
@@ -23,6 +24,7 @@ Options:
   -s, --skip                   Regex of pages to skip
   -a, --aggregate              Whether to aggregate tests by component (by splitting URL) in XML report (default: false)
   --no-screenshots             Whether to save screenshots of visited pages
+  --no-pf-report               Whether to build out the full PatternFly a11y report into coverage/dist
   -ir, --ignore-rules <rules>  Axe: Comma-separated list of error ids to ignore (default: "color-contrast")
   -iI, --ignore-incomplete     Axe: Whether to ignore incomplete errors (default: false)
   -t, --tags <tags>            Axe: Comma-separated list of accessibility (WCAG) tags to run against (default: "wcag2a,wcag2aa")
@@ -37,7 +39,7 @@ Options:
 
 then
 
-`node_modules/.bin/patternfly-a11y --file [json-list-of-urls]`
+`node_modules/.bin/patternfly-a11y [json-list-of-urls]`
 
 OR
 
