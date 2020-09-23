@@ -37,6 +37,8 @@ export class IssuesDrawer extends React.Component<
   IssuesDrawerProps,
   IssuesDrawerState
 > {
+  static whyDidYouRender = true;
+  static displayName = "IssuesDrawer";
   state = {
     currentViolationOrIncomplete:
       this.props.violations[0] || this.props.incomplete[0],
@@ -243,6 +245,9 @@ export class IssuesDrawer extends React.Component<
               Impact: {currentViolationOrIncomplete.impact}
             </span>
           </Title>
+          <div>
+            Rule ID: {currentViolationOrIncomplete.id}
+          </div>
           <div>
             <a href={currentViolationOrIncomplete.helpUrl} target="_blank">
               Learn more

@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -6,7 +7,8 @@ module.exports = {
   entry: __dirname + '/src/index.tsx',
   devtool: 'eval-cheap-source-map',
   output: {
-    path: __dirname + '/dist',
+    path: path.resolve(process.cwd() + '/coverage/dist'),
+    publicPath: '/coverage/',
     filename: 'bundle.js'
   },
   devServer: {
@@ -25,7 +27,8 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: 'coverage/screenshots', to: 'coverage/screenshots' }
+        { from: `${process.cwd()}/coverage/screenshots`, to: `coverage/screenshots` },
+        { from: `${process.cwd()}/coverage/results.json`, to: `coverage/results.json` }
       ],
     }),
   ],
