@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "sourceMap": true,
     "jsx": "react",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@coverage/*": ["../../coverage/*"],
+      "@app*": ["src/app*"]
+    }
   }
 }

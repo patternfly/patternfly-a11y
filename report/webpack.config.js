@@ -8,15 +8,17 @@ module.exports = {
   devtool: 'eval-cheap-source-map',
   output: {
     path: path.resolve(process.cwd() + '/coverage/dist'),
-    publicPath: '/coverage/',
     filename: 'bundle.js'
+  },
+  resolve: {
+    alias: {
+      '@coverage': path.resolve(process.cwd(), 'coverage/'),
+      '@app': path.resolve(__dirname, 'src/app/')
+    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.json']
   },
   devServer: {
     historyApiFallback: true,
-  },
-  resolve: {
-    // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: ['.ts', '.tsx', '.js']
   },
   plugins: [
     new HtmlWebpackPlugin({
