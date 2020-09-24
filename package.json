@@ -1,11 +1,11 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
     "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
-    "report": "webpack-dev-server --config ./report/webpack.config.js --open",
+    "dev": "webpack-dev-server --config ./report/webpack.config.js --open",
     "build": "webpack --config ./report/webpack.config.js",
     "clean": "rm -rf coverage && rm -rf ./report/coverage",
     "test:pf": "yarn clean && ./cli.js test/fullscreenPages.json --prefix https://www.patternfly.org/2020.11 --aggregate --ignore-incomplete --ignore-rules color-contrast,scrollable-region-focusable --skip \"charts|virtualizedtable/selectable\"",

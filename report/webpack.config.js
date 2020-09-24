@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: __dirname + '/src/index.tsx',
+  entry: path.resolve(__dirname + '/src/index.tsx'),
   devtool: 'eval-cheap-source-map',
   output: {
     path: path.resolve(process.cwd() + '/coverage/dist'),
@@ -15,7 +15,14 @@ module.exports = {
       '@coverage': path.resolve(process.cwd(), 'coverage/'),
       '@app': path.resolve(__dirname, 'src/app/')
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.json']
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.json'],
+    modules: [
+      'node_modules',
+      ...module.paths,
+    ]
+  },
+  resolveLoader: {
+    modules: module.paths,
   },
   devServer: {
     historyApiFallback: true,
