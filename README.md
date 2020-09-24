@@ -108,6 +108,37 @@ module.exports = {
 };
 ```
 
+## As a global package
+You can install patternfly-a11y as a global package to build out a report anywhere.
+Because the full patternfly-a11y report uses components that have a peer dependency on react, there is an extra step involved in installing its peer dependencies
+```
+yarn global add @patternfly/patternfly-a11y
+yarn global add install-peerdeps
+cd `yarn global dir`
+cd `yarn global dir`/node_modules/@patternfly
+install-peerdeps @patternfly/react-core
+
+# now you can use the command from anywhere, the coverage folder will be created in your present working directory
+cd ~
+patternfly-a11y --prefix https://pf4.patternfly.org /components/alert
+```
+
+## Viewing the full accessibility report
+After running the `patternfly-a11y` command, a coverage folder was created.
+In it the full report will be bundled in the `dist` folder. You can open up the `index.html` file directly to view the report.
+You can also run a local webserver and/or upload the report.
+Example:
+```
+# Run local webserver
+yarn global add serve
+serve coverage/dist
+
+# Upload the report
+yarn global add surge
+cd coverage/dist
+surge
+```
+
 Currently this tool is rough around the edges. It could be extended to run tests in parallel or on browserstack, do better reporting, allow a plugable version of axe-core, have better error handling (browser tests are always finnicky...), more report formats, you get the idea.
 
 PRs welcome. The author @redallen would love to spend more time on this.
