@@ -16,6 +16,7 @@ program
     "Prefix for listed urls (like https://localhost:9000)"
   )
   .option("-cr, --crawl", "Whether to crawl URLs for more URLs", false)
+  .option("--code-on-failure", "Return a 1 on test failures, and 2 if there are incomplete tests", false)
   .option("-s, --skip <regex>", "Regex of pages to skip")
   .option(
     "-a, --aggregate",
@@ -73,18 +74,24 @@ function runPuppeteer(urls, otherUrls, options) {
     }
   }
 
+  if ((!pages || pages.length === 0) && !options.urls) {
+    console.log(
+      "At least one URL is required (i.e. patternfly-a11y --prefix https://www.google.com /accessibility)"
+    );
+    process.exit(3);
+  }
+
   const writeCoverageFn = () =>
-    writeCoverage(options.aggregate, options.screenshots);
+    writeCoverage(options.aggregate, options.codeOnFailure);
 
   testUrls(pages && pages.length ? pages : options.urls, options).then(() => {
     const exitCode = writeCoverageFn();
     if (options.pfReport) {
       buildPfReport(() => process.exit(exitCode));
     } else {
-      process.exit(exitCode)
+      process.exit(exitCode);
     }
-  }
-  );
+  });
 
   process.on("SIGINT", () => {
     console.log("Writing coverage\n");
