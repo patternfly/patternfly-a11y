@@ -306,7 +306,7 @@ export class IssuesDrawer extends React.Component<
     );
     return (
       <Card>
-        <Drawer isStatic>
+        <Drawer isStatic className="pf-a11y-drawer-content">
           <DrawerContent panelContent={panelContent}>
             <DrawerContentBody>{drawerContent}</DrawerContentBody>
           </DrawerContent>
