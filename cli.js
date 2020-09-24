@@ -16,7 +16,7 @@ program
     "Prefix for listed urls (like https://localhost:9000)"
   )
   .option("-cr, --crawl", "Whether to crawl URLs for more URLs", false)
-  .option("--code-on-failure", "Return a 1 on test failures, and 2 if there are incomplete tests", false)
+  .option("--no-code-on-fail", "By default, exit code 1 is returned on test failures, and 2 if there are incomplete tests, this disables that", false)
   .option("-s, --skip <regex>", "Regex of pages to skip")
   .option(
     "-a, --aggregate",
@@ -82,7 +82,7 @@ function runPuppeteer(urls, otherUrls, options) {
   }
 
   const writeCoverageFn = () =>
-    writeCoverage(options.aggregate, options.codeOnFailure);
+    writeCoverage(options.aggregate, options.codeOnFail);
 
   testUrls(pages && pages.length ? pages : options.urls, options).then(() => {
     const exitCode = writeCoverageFn();

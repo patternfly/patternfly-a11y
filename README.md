@@ -13,6 +13,8 @@ It outputs a coverage directory with:
 ```sh
 patternfly-a11y [command]
 
+patternfly-a11y --help
+
 Commands:
   patternfly-a11y <file>  Audit a list of URLs in JSON file
 
@@ -21,15 +23,16 @@ Options:
   -c, --config <file>          Path to config file
   -p, --prefix <prefix>        Prefix for listed urls (like https://localhost:9000)
   -cr, --crawl                 Whether to crawl URLs for more URLs (default: false)
-  -s, --skip                   Regex of pages to skip
+  --no-code-on-fail            By default, exit code 1 is returned on test failures, and 2 if there are incomplete tests, this disables that
+  -s, --skip <regex>           Regex of pages to skip
   -a, --aggregate              Whether to aggregate tests by component (by splitting URL) in XML report (default: false)
   --no-screenshots             Whether to save screenshots of visited pages
-  --no-pf-report               Whether to build out the full PatternFly a11y report into coverage/dist
   -ir, --ignore-rules <rules>  Axe: Comma-separated list of error ids to ignore (default: "color-contrast")
   -iI, --ignore-incomplete     Axe: Whether to ignore incomplete errors (default: false)
   -t, --tags <tags>            Axe: Comma-separated list of accessibility (WCAG) tags to run against (default: "wcag2a,wcag2aa")
-  -ctx, --context <context>    Axe: Context to run in, defaults to document, can be set to a different selector, i.e.
-                               document.getElementById("content") (default: "document")
+  -ctx, --context <context>    Axe: Context to run in, defaults to document, can be set to a different selector, i.e. document.getElementById("content")
+                               (default: "document")
+  --no-pf-report               Whether to build out the full PatternFly a11y report into coverage/dist
   -h, --help                   display help for command
 ```
 
@@ -110,7 +113,7 @@ module.exports = {
 
 ## As a global package
 You can install patternfly-a11y as a global package to build out a report anywhere.
-Because the full patternfly-a11y report uses components that have a peer dependency on react, there is an extra step involved in installing its peer dependencies
+Because the full patternfly-a11y report uses components that have a peer dependency on react, there is an extra step involved in installing its peer dependencies.
 ```
 yarn global add @patternfly/patternfly-a11y
 yarn global add install-peerdeps
@@ -120,7 +123,7 @@ install-peerdeps @patternfly/react-core
 
 # now you can use the command from anywhere, the coverage folder will be created in your present working directory
 cd ~
-patternfly-a11y --prefix https://pf4.patternfly.org /components/alert
+patternfly-a11y --no-code-on-fail https://pf4.patternfly.org/components/alert
 ```
 
 ## Viewing the full accessibility report
@@ -139,6 +142,4 @@ cd coverage/dist
 surge
 ```
 
-Currently this tool is rough around the edges. It could be extended to run tests in parallel or on browserstack, do better reporting, allow a plugable version of axe-core, have better error handling (browser tests are always finnicky...), more report formats, you get the idea.
-
-PRs welcome. The author @redallen would love to spend more time on this.
+PRs and issues are welcome.
