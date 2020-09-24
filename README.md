@@ -113,10 +113,13 @@ module.exports = {
 
 ## As a global package
 You can install patternfly-a11y as a global package to build out a report anywhere.
-Because the full patternfly-a11y report uses components that have a peer dependency on react, there is an extra step involved in installing its peer dependencies.
+Because the full patternfly-a11y report uses components that have a peer dependency on react, you can either install these (react,react-dom) globally as well or install its peer dependencies using the `install-peerdeps` package.
 ```
-yarn global add @patternfly/patternfly-a11y
-yarn global add install-peerdeps
+# easier way
+yarn global add @patternfly/patternfly-a11y react react-dom
+
+# slightly more involved way
+yarn global add @patternfly/patternfly-a11y install-peerdeps
 cd `yarn global dir`
 cd `yarn global dir`/node_modules/@patternfly
 install-peerdeps @patternfly/react-core
