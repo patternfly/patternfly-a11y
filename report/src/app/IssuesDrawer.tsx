@@ -89,7 +89,7 @@ export class IssuesDrawer extends React.Component<
                 <SimpleListItem
                   key={violation.id}
                   className={`violation__${violation.id}`}
-                  isCurrent={index === 0}
+                  isActive={index === 0}
                 >
                   {violation.help}{" "}
                   <span style={{ float: "right" }}>
