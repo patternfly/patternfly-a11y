@@ -1,4 +1,4 @@
-import "./wdyr";
+// import "./wdyr";
 import * as React from "react";
 import { render } from "react-dom";
 import "@patternfly/react-core/dist/styles/base.css";
