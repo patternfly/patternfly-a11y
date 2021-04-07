@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
@@ -24,37 +24,37 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "axe-core": "^3.5.5",
-    "commander": "^5.1.0",
-    "junit-xml": "^1.2.0",
-    "puppeteer": "^5.3.1",
-    "puppeteer-cluster": "^0.22.0",
-    "xmldoc": "^1.1.2",
     "chromedriver": "^85.0.1",
+    "commander": "^5.1.0",
     "copy-webpack-plugin": "^6.0.0",
     "css-loader": "^4.0.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.0.0",
+    "junit-xml": "^1.2.0",
     "mini-css-extract-plugin": "^1.0.0",
+    "puppeteer": "^5.3.1",
+    "puppeteer-cluster": "^0.22.0",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
     "url-loader": "^4.0.0",
-    "webpack": "^4.43.0"
+    "webpack": "^4.43.0",
+    "xmldoc": "^1.1.2"
   },
   "devDependencies": {
+    "@patternfly/react-charts": "^6.14.11",
+    "@patternfly/react-core": "^4.106.2",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "@welldone-software/why-did-you-render": "^4.3.2",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0",
-    "@patternfly/react-core": "^4.106.2",
-    "@patternfly/react-charts": "^6.14.11",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
-    "@patternfly/react-core": "^4.106.2",
     "@patternfly/react-charts": "^6.14.11",
+    "@patternfly/react-core": "^4.106.2",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
-   }
+  }
 }

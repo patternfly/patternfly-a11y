@@ -31,9 +31,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: __dirname + '/src/index.html'
     }),
-    new MiniCssExtractPlugin({
-      hmr: process.env.NODE_ENV === 'development'
-    }),
+    new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [
         { from: `${process.cwd()}/coverage/screenshots`, to: `coverage/screenshots` },
