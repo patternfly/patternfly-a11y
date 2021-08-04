@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "2.1.2",
+  "version": "4.0.0",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "axe-core": "^3.5.5",
+    "axe-core": "^4.3.2",
     "chromedriver": "^85.0.1",
     "commander": "^5.1.0",
     "copy-webpack-plugin": "^6.0.0",
