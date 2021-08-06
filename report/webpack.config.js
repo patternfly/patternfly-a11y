@@ -47,11 +47,6 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              filename: '[name].css',
-              chunkFilename: '[name].bundle.css',
-              hmr: process.env.NODE_ENV !== 'production',
-            },
           },
           'css-loader',
         ],
