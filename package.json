@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
@@ -35,7 +35,7 @@
     "puppeteer": "^5.3.1",
     "puppeteer-cluster": "^0.22.0",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.5",
+    "typescript": "^4.0.0",
     "url-loader": "^4.0.0",
     "webpack": "^4.43.0",
     "xmldoc": "^1.1.2"
@@ -52,6 +52,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
+    "@types/react": "^16.8.0 || ^17.0.0",
     "@patternfly/react-charts": "^6.14.11",
     "@patternfly/react-core": "^4.106.2",
     "react": "^16.8.0 || ^17.0.0",
