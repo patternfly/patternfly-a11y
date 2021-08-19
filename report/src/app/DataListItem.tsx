@@ -23,11 +23,11 @@ const DataListItemInternal = ({
   const screenshotCell = hideScreenshots ? null : (
     <DataListCell key={`image-${key}`}>
       <a
-        href={`../../coverage/screenshots/${val.screenshotFile}`}
+        href={`/screenshots/${val.screenshotFile}`}
         target="_blank"
       >
         <img
-          src={`../../coverage/screenshots/${val.screenshotFile}`}
+          src={`/screenshots/${val.screenshotFile}`}
           style={{ maxHeight: "250px" }}
         />
       </a>

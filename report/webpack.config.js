@@ -1,28 +1,18 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname + '/src/index.tsx'),
   devtool: 'eval-cheap-source-map',
+  mode: 'development',
   output: {
-    path: path.resolve(process.cwd() + '/coverage/dist'),
+    path: path.resolve(__dirname + '/dist'),
     filename: 'bundle.js'
   },
   resolve: {
-    alias: {
-      '@coverage': path.resolve(process.cwd(), 'coverage/'),
-      '@app': path.resolve(__dirname, 'src/app/')
-    },
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.json'],
-    modules: [
-      'node_modules',
-      ...module.paths,
-    ]
-  },
-  resolveLoader: {
-    modules: module.paths,
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   devServer: {
     historyApiFallback: true,
@@ -32,12 +22,7 @@ module.exports = {
       template: __dirname + '/src/index.html'
     }),
     new MiniCssExtractPlugin(),
-    new CopyPlugin({
-      patterns: [
-        { from: `${process.cwd()}/coverage/screenshots`, to: `coverage/screenshots` },
-        { from: `${process.cwd()}/coverage/results.json`, to: `coverage/results.json` }
-      ],
-    }),
+    new CleanWebpackPlugin(),
   ],
   module: {
     rules: [

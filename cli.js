@@ -85,12 +85,7 @@ function runPuppeteer(urls, otherUrls, options) {
     writeCoverage(options.aggregate, options.codeOnFail);
 
   testUrls(pages && pages.length ? pages : options.urls, options).then(() => {
-    const exitCode = writeCoverageFn();
-    if (options.pfReport) {
-      buildPfReport(() => process.exit(exitCode));
-    } else {
-      process.exit(exitCode);
-    }
+    process.exit(writeCoverageFn());
   });
 
   process.on("SIGINT", () => {
