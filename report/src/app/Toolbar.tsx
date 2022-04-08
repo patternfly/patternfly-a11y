@@ -12,6 +12,7 @@ import SortIncreasing from "@patternfly/react-icons/dist/js/icons/sort-amount-do
 import InfoCircleIcon from "@patternfly/react-icons/dist/js/icons/info-circle-icon";
 import { SortSelect } from "./SortSelect";
 import { ExpandAll } from "./ExpandAll";
+import { SeveritySelect } from "./SeveritySelect";
 
 export const Toolbar = ({
   hideScreenshots,
@@ -25,6 +26,7 @@ export const Toolbar = ({
   sortIncreasing,
   onSelect,
   onSortDirectionClick,
+  onSeveritySelect,
 }) => {
   const toolbarItems = (
     <React.Fragment>
@@ -68,7 +70,7 @@ export const Toolbar = ({
           name="includePossibleName"
         />
       </ToolbarItem>
-      <ToolbarItem>
+      <ToolbarItem style={{ marginRight: 0 }}>
         <SortSelect onSelect={onSelect} />
       </ToolbarItem>
       <ToolbarItem>
@@ -79,6 +81,9 @@ export const Toolbar = ({
         >
           {sortIncreasing ? <SortIncreasing /> : <SortDecreasing />}
         </Button>
+      </ToolbarItem>
+      <ToolbarItem>
+          <SeveritySelect onSelect={onSeveritySelect} />
       </ToolbarItem>
     </React.Fragment>
   );

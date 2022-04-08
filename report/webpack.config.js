@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname + '/src/index.tsx'),
@@ -16,6 +17,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -23,6 +27,11 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "public" },
+      ],
+    }),
   ],
   module: {
     rules: [

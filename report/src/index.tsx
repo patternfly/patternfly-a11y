@@ -12,5 +12,8 @@ fetch('/results.json')
       <ExpandableDataList report={results} />,
       document.getElementById("root")
     )
-  );
+  )
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 

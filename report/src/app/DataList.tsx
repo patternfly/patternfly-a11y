@@ -16,6 +16,7 @@ interface DataListState {
   sitesWithIssues: any[];
   sitesWithoutIssues: any[];
   totalNumberIssues: number;
+  severitySelections: string[];
 }
 
 interface DataListProps {
@@ -62,17 +63,20 @@ export class ExpandableDataList extends React.Component<
 
     const expandAll = false;
     this.state = {
-      expanded: expandAll ? sitesWithIssues.map((val: any) => `${val.order}_${val.url}`) : [],
+      expanded: expandAll
+        ? sitesWithIssues.map((val: any) => `${val.order}_${val.url}`)
+        : [],
       hideScreenshots: false,
       expandAll,
       isOpen: false,
-      selected: "Sort by Order",
+      selected: "Sort by URL",
       sortIncreasing: true,
-      showPassedURLs: true,
+      showPassedURLs: false,
       includePossibleIssues: true,
       sitesWithIssues,
       sitesWithoutIssues,
       totalNumberIssues,
+      severitySelections: ["critical", "serious", "moderate", "minor"],
     };
   }
 
@@ -85,6 +89,12 @@ export class ExpandableDataList extends React.Component<
   onSelect = (event, selection) => {
     this.setState({
       selected: selection,
+    });
+  };
+
+  onSeveritySelect = (event, selection) => {
+    this.setState({
+      severitySelections: selection,
     });
   };
 
@@ -212,6 +222,7 @@ export class ExpandableDataList extends React.Component<
           handlePossibleIssues={this.handlePossibleIssues}
           sortIncreasing={sortIncreasing}
           onSelect={this.onSelect}
+          onSeveritySelect={this.onSeveritySelect}
           onSortDirectionClick={this.onSortDirectionClick}
         />
         <DataList aria-label="Accessibility report" isCompact>
@@ -219,6 +230,17 @@ export class ExpandableDataList extends React.Component<
             ...this.state.sitesWithIssues,
             ...(this.state.showPassedURLs ? this.state.sitesWithoutIssues : []),
           ]
+            .filter((val: any) => {
+              // filter out issues that do not match current severity selection
+              val.filteredViolations = val.violations.filter((violation) => this.state.severitySelections.includes(violation.impact));
+              val.filteredIncomplete = val.incomplete.filter((incomplete) => this.state.severitySelections.includes(incomplete.impact));
+              const numViolations = val.filteredViolations?.length || 0; 
+              const numIncomplete = val.filteredIncomplete?.length || 0; 
+              if (numViolations + numIncomplete === 0) {
+                return null;
+              } 
+              return val;
+            })
             .sort((a: any, b: any) => {
               const sortDirection = this.state.sortIncreasing ? 1 : -1;
               if (this.state.selected === "Sort by Order") {
@@ -229,9 +251,17 @@ export class ExpandableDataList extends React.Component<
                 return a.url > b.url ? sortDirection : sortDirection * -1;
               } else {
                 // Sort by Issues
-                return a.violations.length > b.violations.length
-                  ? sortDirection
-                  : sortDirection * -1;
+                const numViolationsA = this.getNumberOfIssues(a.filteredViolations);
+                const numIncompleteA = this.getNumberOfIssues(a.filteredIncomplete || []);
+                const numViolationsB = this.getNumberOfIssues(b.filteredViolations);
+                const numIncompleteB = this.getNumberOfIssues(b.filteredIncomplete || []);
+                if ((numViolationsA + numIncompleteA) < (numViolationsB + numIncompleteB)) {
+                  return -1 * sortDirection;
+                }
+                if ((numViolationsA + numIncompleteA) > (numViolationsB + numIncompleteB)) {
+                  return 1 * sortDirection;
+                }
+                return 0;
               }
             })
             .map((val: any) => {
@@ -241,8 +271,8 @@ export class ExpandableDataList extends React.Component<
                   key={key}
                   val={val}
                   numIssues={
-                    this.getNumberOfIssues(val.violations) +
-                    this.getNumberOfIssues(val.incomplete || [])
+                    this.getNumberOfIssues(val.filteredViolations) +
+                    this.getNumberOfIssues(val.filteredIncomplete || [])
                   }
                   isExpanded={this.state.expanded.includes(key)}
                   hideScreenshots={this.state.hideScreenshots}

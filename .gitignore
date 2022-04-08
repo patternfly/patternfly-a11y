@@ -1,2 +1,4 @@
 node_modules
 coverage
+public/screenshots
+public/results.json
