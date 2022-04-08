@@ -25,6 +25,7 @@ const DataListItemInternal = ({
       <a
         href={`/screenshots/${val.screenshotFile}`}
         target="_blank"
+        onClick={(e) => e.stopPropagation()}
       >
         <img
           src={`/screenshots/${val.screenshotFile}`}
@@ -42,8 +43,8 @@ const DataListItemInternal = ({
   return (
     <PfDataListItem aria-labelledby={`url-${key}`} isExpanded={isExpanded}>
       <DataListItemRow onClick={shouldToggle} key={`row-${key}`}>
-        {val.violations.length > 0 ||
-        (val.incomplete && val.incomplete.length > 0) ? (
+        {val.filteredViolations.length > 0 ||
+        (val.filteredIncomplete && val.filteredIncomplete.length > 0) ? (
           <DataListToggle
             onClick={shouldToggle}
             isExpanded={isExpanded}
@@ -58,12 +59,12 @@ const DataListItemInternal = ({
         <DataListItemCells
           key={`cells-${key}`}
           dataListCells={[
-            <DataListCell
-              key={`order-${key}`}
-              style={{ cursor: cursorStyle, maxWidth: "80px" }}
-            >
-              <span id={`order-${key}`}>{val.order}</span>
-            </DataListCell>,
+            // <DataListCell
+            //   key={`order-${key}`}
+            //   style={{ cursor: cursorStyle, maxWidth: "80px" }}
+            // >
+            //   <span id={`order-${key}`}>{val.order}</span>
+            // </DataListCell>,
             <DataListCell
               width={2}
               key={`url-${key}`}
@@ -94,8 +95,8 @@ const DataListItemInternal = ({
           ]}
         />
       </DataListItemRow>
-      {(val.violations.length > 0 ||
-        (val.incomplete && val.incomplete.length > 0)) &&
+      {(val.filteredViolations.length > 0 ||
+        (val.filteredIncomplete && val.filteredIncomplete.length > 0)) &&
         isExpanded && (
           <DataListContent
             aria-label={`Accessibility issues for ${key}`}
@@ -103,8 +104,8 @@ const DataListItemInternal = ({
           >
             <IssuesDrawer
               url={val.url}
-              violations={val.violations}
-              incomplete={val.incomplete || []}
+              violations={val.filteredViolations}
+              incomplete={val.filteredIncomplete || []}
             />
           </DataListContent>
         )}

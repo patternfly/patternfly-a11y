@@ -5,8 +5,9 @@
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
     "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
-    "dev": "webpack-dev-server --config ./report/webpack.config.js --open",
-    "build": "webpack --config ./report/webpack.config.js --mode production",
+    "dev": "yarn copy && webpack-dev-server --config ./report/webpack.config.js --open",
+    "build": "yarn copy && webpack --config ./report/webpack.config.js --mode production",
+    "copy": "cp -R coverage/screenshots report/public/screenshots && cp coverage/results.json report/public/results.json",
     "clean": "rm -rf coverage && rm -rf ./report/coverage",
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
