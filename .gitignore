@@ -2,3 +2,4 @@ node_modules
 coverage
 public/screenshots
 public/results.json
+report/dist
