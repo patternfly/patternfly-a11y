@@ -1,0 +1,708 @@
+{
+  "1_/openshift/create": {
+    "incomplete": [
+      {
+        "id": "aria-allowed-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412"
+        ],
+        "description": "Ensures ARIA attributes are allowed for an element's role",
+        "help": "Elements must only use allowed ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "relatedNodes": [
+                  {
+                    "html": "<div aria-label=\"Overflow actions\" class=\"pf-c-dropdown pf-m-align-right chr-c-dropdown-user-toggle\" data-ouia-component-type=\"PF4/Dropdown\" data-ouia-safe=\"true\" data-ouia-component-id=\"chrome-user-menu\">"
+                  }
+                ]
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "div",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<div aria-label=\"Overflow actions\" class=\"pf-c-dropdown pf-m-align-right chr-c-dropdown-user-toggle\" data-ouia-component-type=\"PF4/Dropdown\" data-ouia-safe=\"true\" data-ouia-component-id=\"chrome-user-menu\">",
+            "target": [
+              ".pf-m-visible-on-lg > .chr-c-dropdown-user-toggle[aria-label=\"Overflow actions\"][data-ouia-component-id=\"chrome-user-menu\"]"
+            ]
+          }
+        ]
+      }
+    ],
+    "violations": [
+      {
+        "id": "button-name",
+        "impact": "critical",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "description": "Ensures buttons have discernible text",
+        "help": "Buttons must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/button-name?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"SettingsMenu\" id=\"SettingsMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">"
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element does not have inner text that is visible to screen readers"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute does not exist or is empty"
+              },
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
+              },
+              {
+                "id": "non-empty-title",
+                "data": {
+                  "messageKey": "noAttr"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has no title attribute"
+              },
+              {
+                "id": "presentational-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "critical",
+            "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"SettingsMenu\" id=\"SettingsMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">",
+            "target": [
+              "#SettingsMenu"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"HelpMenu\" id=\"HelpMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">"
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element does not have inner text that is visible to screen readers"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute does not exist or is empty"
+              },
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
+              },
+              {
+                "id": "non-empty-title",
+                "data": {
+                  "messageKey": "noAttr"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has no title attribute"
+              },
+              {
+                "id": "presentational-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "critical",
+            "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"HelpMenu\" id=\"HelpMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">",
+            "target": [
+              "#HelpMenu"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "duplicate-id",
+        "impact": "minor",
+        "tags": [
+          "cat.parsing",
+          "wcag2a",
+          "wcag411"
+        ],
+        "description": "Ensures every id attribute value is unique",
+        "help": "id attribute value must be unique",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/duplicate-id?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "duplicate-id",
+                "data": "openshift",
+                "relatedNodes": [
+                  {
+                    "html": "<script src=\"/apps/openshift/openshift.d222372043dc1860f4a2.js\" id=\"openshift\"></script>",
+                    "target": [
+                      "body > script:nth-child(16)"
+                    ]
+                  },
+                  {
+                    "html": "<script src=\"/apps/openshift/openshift.d222372043dc1860f4a2.js\" id=\"openshift\"></script>"
+                  }
+                ],
+                "impact": "minor",
+                "message": "Document has multiple static elements with the same id attribute: openshift"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "minor",
+            "html": "<script src=\"/apps/openshift/openshift.d222372043dc1860f4a2.js\" id=\"openshift\"></script>",
+            "target": [
+              "script:nth-child(15)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-alt",
+        "impact": "critical",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "description": "Ensures <img> elements have alternate text or a role of none or presentation",
+        "help": "Images must have alternate text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/image-alt?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-alt",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<img class=\"truste-info-icon\" src=\"https://consent.trustarc.com/get?name=info-circle-solid.svg\">"
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element does not have an alt attribute"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute does not exist or is empty"
+              },
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
+              },
+              {
+                "id": "non-empty-title",
+                "data": {
+                  "messageKey": "noAttr"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has no title attribute"
+              },
+              {
+                "id": "presentational-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "critical",
+            "html": "<img class=\"truste-info-icon\" src=\"https://consent.trustarc.com/get?name=info-circle-solid.svg\">",
+            "target": [
+              ".truste-info-icon"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "list",
+        "impact": "serious",
+        "tags": [
+          "cat.structure",
+          "wcag2a",
+          "wcag131"
+        ],
+        "description": "Ensures that lists are structured correctly",
+        "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/list?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "relatedNodes": [
+                  {
+                    "html": "<ul class=\"pf-c-nav__list\">"
+                  }
+                ]
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "only-listitems",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<section class=\"pf-c-nav__section chr-c-section-nav\" aria-labelledby=\"Insights\">",
+                    "target": [
+                      ".pf-c-nav__section"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "List element has direct children that are not allowed inside <li> elements"
+              }
+            ],
+            "impact": "serious",
+            "html": "<ul class=\"pf-c-nav__list\">",
+            "target": [
+              ".pf-c-nav > ul"
+            ]
+          }
+        ]
+      }
+    ],
+    "time": 0.935110666,
+    "screenshotFile": "1_openshift_create.png",
+    "url": "/openshift/create",
+    "label": null,
+    "order": 1,
+    "axeOptions": {
+      "reporter": "v2",
+      "rules": {
+        "color-contrast": {
+          "enabled": false
+        }
+      },
+      "runOnly": {
+        "type": "tag",
+        "values": [
+          "wcag2a",
+          "wcag2aa"
+        ]
+      }
+    },
+    "context": "document"
+  },
+  "0_/openshift": {
+    "incomplete": [
+      {
+        "id": "aria-allowed-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412"
+        ],
+        "description": "Ensures ARIA attributes are allowed for an element's role",
+        "help": "Elements must only use allowed ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "relatedNodes": [
+                  {
+                    "html": "<div aria-label=\"Overflow actions\" class=\"pf-c-dropdown pf-m-align-right chr-c-dropdown-user-toggle\" data-ouia-component-type=\"PF4/Dropdown\" data-ouia-safe=\"true\" data-ouia-component-id=\"chrome-user-menu\">"
+                  }
+                ]
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "div",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute is not well supported on a div with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<div aria-label=\"Overflow actions\" class=\"pf-c-dropdown pf-m-align-right chr-c-dropdown-user-toggle\" data-ouia-component-type=\"PF4/Dropdown\" data-ouia-safe=\"true\" data-ouia-component-id=\"chrome-user-menu\">",
+            "target": [
+              ".pf-m-visible-on-lg > .chr-c-dropdown-user-toggle[aria-label=\"Overflow actions\"][data-ouia-component-id=\"chrome-user-menu\"]"
+            ]
+          }
+        ]
+      }
+    ],
+    "violations": [
+      {
+        "id": "button-name",
+        "impact": "critical",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "description": "Ensures buttons have discernible text",
+        "help": "Buttons must have discernible text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/button-name?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"SettingsMenu\" id=\"SettingsMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">"
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element does not have inner text that is visible to screen readers"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute does not exist or is empty"
+              },
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
+              },
+              {
+                "id": "non-empty-title",
+                "data": {
+                  "messageKey": "noAttr"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has no title attribute"
+              },
+              {
+                "id": "presentational-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "critical",
+            "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"SettingsMenu\" id=\"SettingsMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">",
+            "target": [
+              "#SettingsMenu"
+            ]
+          },
+          {
+            "any": [
+              {
+                "id": "button-has-visible-text",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"HelpMenu\" id=\"HelpMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">"
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element does not have inner text that is visible to screen readers"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute does not exist or is empty"
+              },
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
+              },
+              {
+                "id": "non-empty-title",
+                "data": {
+                  "messageKey": "noAttr"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has no title attribute"
+              },
+              {
+                "id": "presentational-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "critical",
+            "html": "<button data-ouia-component-type=\"PF4/DropdownToggle\" data-ouia-safe=\"true\" data-ouia-component-id=\"HelpMenu\" id=\"HelpMenu\" class=\"pf-c-dropdown__toggle pf-m-plain\" type=\"button\" aria-expanded=\"false\" aria-haspopup=\"true\">",
+            "target": [
+              "#HelpMenu"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "duplicate-id",
+        "impact": "minor",
+        "tags": [
+          "cat.parsing",
+          "wcag2a",
+          "wcag411"
+        ],
+        "description": "Ensures every id attribute value is unique",
+        "help": "id attribute value must be unique",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/duplicate-id?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "duplicate-id",
+                "data": "openshift",
+                "relatedNodes": [
+                  {
+                    "html": "<script src=\"/apps/openshift/openshift.d222372043dc1860f4a2.js\" id=\"openshift\"></script>",
+                    "target": [
+                      "script:nth-child(14)"
+                    ]
+                  },
+                  {
+                    "html": "<script src=\"/apps/openshift/openshift.d222372043dc1860f4a2.js\" id=\"openshift\"></script>"
+                  }
+                ],
+                "impact": "minor",
+                "message": "Document has multiple static elements with the same id attribute: openshift"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "minor",
+            "html": "<script src=\"/apps/openshift/openshift.d222372043dc1860f4a2.js\" id=\"openshift\"></script>",
+            "target": [
+              "script:nth-child(12)"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-alt",
+        "impact": "critical",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "description": "Ensures <img> elements have alternate text or a role of none or presentation",
+        "help": "Images must have alternate text",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/image-alt?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "has-alt",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<img class=\"truste-info-icon\" src=\"https://consent.trustarc.com/get?name=info-circle-solid.svg\">"
+                  }
+                ],
+                "impact": "critical",
+                "message": "Element does not have an alt attribute"
+              },
+              {
+                "id": "aria-label",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute does not exist or is empty"
+              },
+              {
+                "id": "aria-labelledby",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty"
+              },
+              {
+                "id": "non-empty-title",
+                "data": {
+                  "messageKey": "noAttr"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element has no title attribute"
+              },
+              {
+                "id": "presentational-role",
+                "data": null,
+                "relatedNodes": [],
+                "impact": "minor",
+                "message": "Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "critical",
+            "html": "<img class=\"truste-info-icon\" src=\"https://consent.trustarc.com/get?name=info-circle-solid.svg\">",
+            "target": [
+              ".truste-info-icon"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "list",
+        "impact": "serious",
+        "tags": [
+          "cat.structure",
+          "wcag2a",
+          "wcag131"
+        ],
+        "description": "Ensures that lists are structured correctly",
+        "help": "<ul> and <ol> must only directly contain <li>, <script> or <template> elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/list?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "relatedNodes": [
+                  {
+                    "html": "<ul class=\"pf-c-nav__list\">"
+                  }
+                ]
+              }
+            ],
+            "all": [],
+            "none": [
+              {
+                "id": "only-listitems",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<section class=\"pf-c-nav__section chr-c-section-nav\" aria-labelledby=\"Insights\">",
+                    "target": [
+                      ".pf-c-nav__section"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "List element has direct children that are not allowed inside <li> elements"
+              }
+            ],
+            "impact": "serious",
+            "html": "<ul class=\"pf-c-nav__list\">",
+            "target": [
+              "nav > ul"
+            ]
+          }
+        ]
+      }
+    ],
+    "time": 0.147648916,
+    "screenshotFile": "0_openshift.png",
+    "url": "/openshift",
+    "label": null,
+    "order": 0,
+    "axeOptions": {
+      "reporter": "v2",
+      "rules": {
+        "color-contrast": {
+          "enabled": false
+        }
+      },
+      "runOnly": {
+        "type": "tag",
+        "values": [
+          "wcag2a",
+          "wcag2aa"
+        ]
+      }
+    },
+    "context": "document"
+  }
+}
