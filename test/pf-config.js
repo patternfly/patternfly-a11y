@@ -8,13 +8,14 @@ async function waitFor(page) {
 }
 
 module.exports = {
-  prefix: 'https://www.patternfly.org',
+  prefix: 'https://www.patternfly.org/v4',
   waitFor,
-  crawl: false,
-  urls: ['/v4/components/button/react/variations'],
+  crawl: true,
+  context: 'document.getElementById("ws-page-main")',
   ignoreRules: 'color-contrast,page-has-heading-one,scrollable-region-focusable,bypass',
-  ignoreIncomplete: true,
+  ignoreIncomplete: false,
   // tree-table examples are skipped because aria-level, aria-posinset, aria-setsize are intentionally
   // being used slightly unconventionally in those examples
-  skip: /^\/charts\/|tree-table$/
+  skip: /^\/charts\/|tree-table$/,
+  urls: ['/']
 };
