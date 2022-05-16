@@ -1,6 +1,6 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
