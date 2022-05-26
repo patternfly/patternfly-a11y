@@ -6,7 +6,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname + '/src/index.tsx'),
-  devtool: 'eval-cheap-source-map',
+  // devtool: 'eval-cheap-source-map',
+  devtool: 'eval-source-map',
   mode: 'development',
   output: {
     path: path.resolve(__dirname + '/dist'),

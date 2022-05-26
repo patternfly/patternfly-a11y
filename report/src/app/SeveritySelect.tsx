@@ -39,6 +39,7 @@ const SeveritySelectInternal = ({ onSelect }) => {
       <SelectOption value="serious">Serious</SelectOption>
       <SelectOption value="moderate">Moderate</SelectOption>
       <SelectOption value="minor">Minor</SelectOption>
+      <SelectOption value="ok">Passed</SelectOption>
     </Select>
   );
 };

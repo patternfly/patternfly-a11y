@@ -137,11 +137,11 @@ Example:
 ```
 # Run local webserver
 yarn global add serve
-serve coverage/dist
+serve report/dist
 
 # Upload the report
 yarn global add surge
-cd coverage/dist
+cd report/dist
 surge
 ```
 
