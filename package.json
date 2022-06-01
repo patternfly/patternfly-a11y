@@ -7,12 +7,13 @@
     "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
     "dev": "yarn copy && webpack-dev-server --config ./report/webpack.config.js",
     "build": "yarn copy && webpack --config ./report/webpack.config.js --mode production",
-    "copy": "cp -R coverage/screenshots report/public/screenshots && cp coverage/results.json report/public/results.json",
+    "copy": "mkdir -p report/public && cp -R coverage/screenshots report/public/screenshots && cp coverage/results.json report/public/results.json",
     "clean": "rm -rf coverage && rm -rf ./report/coverage",
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
     "test:koku": "yarn clean && ./cli.js --config test/koku-config.js",
-    "test:console": "yarn clean && ./cli.js --config test/console-config.js"
+    "test:console": "yarn clean && ./cli.js --config test/console-config.js",
+    "test:cli": "node cli.js https://pf4.patternfly.org/components/alert"
   },
   "repository": {
     "type": "git",
@@ -25,12 +26,12 @@
   },
   "dependencies": {
     "axe-core": "^4.4.1",
-    "chromedriver": "^85.0.1",
+    "chromedriver": "^101.0.0",
     "commander": "^5.1.0",
     "fs-extra": "^10.0.0",
     "junit-xml": "^1.2.0",
-    "puppeteer": "^5.3.1",
-    "puppeteer-cluster": "^0.22.0",
+    "puppeteer": "^14.2.0",
+    "puppeteer-cluster": "^0.23.0",
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {
