@@ -19,8 +19,6 @@ export const Toolbar = ({
   handleChange,
   expandAll,
   handleExpandAll,
-  showPassedURLs,
-  handleShowPass,
   includePossibleIssues,
   handlePossibleIssues,
   sortIncreasing,
@@ -42,16 +40,6 @@ export const Toolbar = ({
       </ToolbarItem>
       <ToolbarItem>
         <ExpandAll expandAll={expandAll} handleExpandAll={handleExpandAll} />
-      </ToolbarItem>
-      <ToolbarItem>
-        <Checkbox
-          label="Show passed URLs"
-          isChecked={showPassedURLs}
-          onChange={handleShowPass}
-          aria-label="Show passed URLs"
-          id="showPassedId"
-          name="showPassedName"
-        />
       </ToolbarItem>
       <ToolbarItem>
         <Checkbox

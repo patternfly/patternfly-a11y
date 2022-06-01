@@ -11,7 +11,6 @@ interface DataListState {
   isOpen: boolean;
   selected: any;
   sortIncreasing: boolean;
-  showPassedURLs: boolean;
   includePossibleIssues: boolean;
   sitesWithIssues: any[];
   sitesWithoutIssues: any[];
@@ -71,7 +70,6 @@ export class ExpandableDataList extends React.Component<
       isOpen: false,
       selected: "Sort by URL",
       sortIncreasing: true,
-      showPassedURLs: false,
       includePossibleIssues: true,
       sitesWithIssues,
       sitesWithoutIssues,
@@ -138,12 +136,6 @@ export class ExpandableDataList extends React.Component<
       expanded: shouldExpandAll ? Object.keys(this.props.report) : [],
     });
   };
-  handleShowPass = (checked, event) => {
-    const target = event.target;
-    const showPassedURLs =
-      target.type === "checkbox" ? target.checked : target.value;
-    this.setState({ showPassedURLs });
-  };
   handlePossibleIssues = (checked, event) => {
     const target = event.target;
     const includePossibleIssues =
@@ -174,14 +166,12 @@ export class ExpandableDataList extends React.Component<
       hideScreenshots,
       expandAll,
       sortIncreasing,
-      showPassedURLs,
       includePossibleIssues,
       sitesWithIssues,
       sitesWithoutIssues,
       totalNumberIssues,
     } = this.state;
     const { report } = this.props;
-
     return (
       <React.Fragment>
         <Bullseye style={{ padding: "15px" }}>
@@ -216,8 +206,6 @@ export class ExpandableDataList extends React.Component<
           handleChange={this.handleChange}
           expandAll={expandAll}
           handleExpandAll={this.handleExpandAll}
-          showPassedURLs={showPassedURLs}
-          handleShowPass={this.handleShowPass}
           includePossibleIssues={includePossibleIssues}
           handlePossibleIssues={this.handlePossibleIssues}
           sortIncreasing={sortIncreasing}
@@ -228,7 +216,7 @@ export class ExpandableDataList extends React.Component<
         <DataList aria-label="Accessibility report" isCompact>
           {[
             ...this.state.sitesWithIssues,
-            ...(this.state.showPassedURLs ? this.state.sitesWithoutIssues : []),
+            ...(this.state.sitesWithoutIssues || []),
           ]
             .filter((val: any) => {
               // filter out issues that do not match current severity selection
@@ -237,6 +225,9 @@ export class ExpandableDataList extends React.Component<
               const numViolations = val.filteredViolations?.length || 0; 
               const numIncomplete = val.filteredIncomplete?.length || 0; 
               if (numViolations + numIncomplete === 0) {
+                if (this.state.severitySelections.includes("ok")) {
+                  return val;
+                }
                 return null;
               } 
               return val;
