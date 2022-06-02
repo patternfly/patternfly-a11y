@@ -220,8 +220,8 @@ export class ExpandableDataList extends React.Component<
           ]
             .filter((val: any) => {
               // filter out issues that do not match current severity selection
-              val.filteredViolations = val.violations.filter((violation) => this.state.severitySelections.includes(violation.impact));
-              val.filteredIncomplete = val.incomplete.filter((incomplete) => this.state.severitySelections.includes(incomplete.impact));
+              val.filteredViolations = val.violations ? val.violations.filter((violation) => this.state.severitySelections.includes(violation.impact)) : [];
+              val.filteredIncomplete = val.incomplete ? val.incomplete.filter((incomplete) => this.state.severitySelections.includes(incomplete.impact)) : [];
               const numViolations = val.filteredViolations?.length || 0; 
               const numIncomplete = val.filteredIncomplete?.length || 0; 
               if (numViolations + numIncomplete === 0) {
