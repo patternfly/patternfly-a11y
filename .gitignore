@@ -1,5 +1,4 @@
 node_modules
 coverage
-report/public/screenshots
-report/public/results.json
-report/dist
+report/static/screenshots
+report/static/results.json

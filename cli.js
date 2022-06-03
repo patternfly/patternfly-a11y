@@ -4,7 +4,7 @@ const { Command } = require("commander");
 const program = new Command();
 
 const { testUrls } = require("./lib/testUrls");
-const { writeCoverage, buildPfReport } = require("./lib/reporter");
+const { writeCoverage } = require("./lib/reporter");
 
 program
   .version(require("./package.json").version)
@@ -43,10 +43,6 @@ program
     "-ctx, --context <context>",
     'Axe: Context to run in, defaults to document, can be set to a different selector, i.e. document.getElementById("content")',
     "document"
-  )
-  .option(
-    "--no-pf-report",
-    "Whether to build out the full PatternFly a11y report into coverage/dist"
   )
   .action(runPuppeteer);
 
