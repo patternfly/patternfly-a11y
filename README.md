@@ -40,15 +40,15 @@ Options:
 
 then
 
-`patternfly-a11y [json-list-of-urls]`
+`yarn exec patternfly-a11y [json-list-of-urls]`
 
 OR
 
-`patternfly-a11y --prefix http://localhost:9000 --crawl /dashboard`
+`yarn exec patternfly-a11y --prefix http://localhost:9000 --crawl /dashboard`
 
 For more advanced usage, you can create a config file
 
-`patternfly-a11y --config a11y-config.js`
+`yarn exec patternfly-a11y --config a11y-config.js`
 
 Sample configuration file (a11y-config.js)
 
@@ -118,7 +118,7 @@ npx serve coverage
 
 ## Development build
 To work on and update the react report app, first a coverage/ report needs to exist.
-1. Run a `patternfly-a11y` CLI command to create the coverage/ report folder.
+1. Run a `./cli.js` CLI command to create the coverage/ report folder.
 1. Run `yarn dev` to launch the react app, it will copy files from the coverage/ report folder into the report/static folder.
 
 PRs and issues are welcome.
