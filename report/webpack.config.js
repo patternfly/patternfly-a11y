@@ -19,7 +19,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     static: {
-      directory: path.resolve(__dirname, 'public'),
+      directory: path.resolve(__dirname, 'static'),
     },
   },
   plugins: [
@@ -27,12 +27,7 @@ module.exports = {
       template: __dirname + '/src/index.html'
     }),
     new MiniCssExtractPlugin(),
-    new CleanWebpackPlugin(),
-    new CopyPlugin({
-      patterns: [
-        { from: path.resolve(__dirname, 'public') },
-      ],
-    }),
+    new CleanWebpackPlugin()
   ],
   module: {
     rules: [

@@ -2,11 +2,10 @@
 
 This is a CLI tool developed for [patternfly-react](https://github.com/patternfly/patternfly-react/), [patternfly-next](https://github.com/patternfly/patternfly-next/), and [patternfly-org](https://github.com/patternfly/patternfly-org/) to run [axe](https://www.deque.com/axe/) in Selenium on a list of urls. It has options suited to our needs but should work as an integration test for any project.
 
-It outputs a coverage directory with:
+It outputs a coverage directory with a webpack-built report, as well as:
   - report.json: full axe output per-url
   - report.xml: junit coverage grouped into test cases
   - report.html: more readable html report of report.xml
-  - dist: contains the webpack output for the full a11y report
 
 ## Usage
 
@@ -32,25 +31,24 @@ Options:
   -t, --tags <tags>            Axe: Comma-separated list of accessibility (WCAG) tags to run against (default: "wcag2a,wcag2aa")
   -ctx, --context <context>    Axe: Context to run in, defaults to document, can be set to a different selector, i.e. document.getElementById("content")
                                (default: "document")
-  --no-pf-report               Whether to build out the full PatternFly a11y report into coverage/dist
   -h, --help                   display help for command
 ```
 
 ## Getting started
 
-`npm i @patternfly/patternfly-a11y`
+`yarn add @patternfly/patternfly-a11y`
 
 then
 
-`node_modules/.bin/patternfly-a11y [json-list-of-urls]`
+`patternfly-a11y [json-list-of-urls]`
 
 OR
 
-`node_modules/.bin/patternfly-a11y --prefix http://localhost:9000 --crawl /dashboard`
+`patternfly-a11y --prefix http://localhost:9000 --crawl /dashboard`
 
 For more advanced usage, you can create a config file
 
-`node_modules/.bin/patternfly-a11y --config a11y-config.js`
+`patternfly-a11y --config a11y-config.js`
 
 Sample configuration file (a11y-config.js)
 
@@ -111,38 +109,16 @@ module.exports = {
 };
 ```
 
-## As a global package
-You can install patternfly-a11y as a global package to build out a report anywhere.
-Because the full patternfly-a11y report uses components that have a peer dependency on react, you can either install these (react,react-dom) globally as well or install its peer dependencies using the `install-peerdeps` package.
-```
-# easier way
-yarn global add @patternfly/patternfly-a11y react react-dom
+## Production build
+If updating the source under the report/ directory, create a new webpack build by running `yarn build`, which outputs the site to report/dist.
+Whenever the patternfly-a11y CLI tool is run, it generates a coverage folder at the root, and copies the report/dist files into it, so that the full report can be served up.
 
-# slightly more involved way
-yarn global add @patternfly/patternfly-a11y install-peerdeps
-cd `yarn global dir`
-cd `yarn global dir`/node_modules/@patternfly
-install-peerdeps @patternfly/react-core
+### Serve/view production build (example)
+npx serve coverage
 
-# now you can use the command from anywhere, the coverage folder will be created in your present working directory
-cd ~
-patternfly-a11y --no-code-on-fail https://pf4.patternfly.org/components/alert
-```
-
-## Viewing the full accessibility report
-After running the `patternfly-a11y` command, a coverage folder was created.
-In it the full report will be bundled in the `dist` folder. You can open up the `index.html` file directly to view the report.
-You can also run a local webserver and/or upload the report.
-Example:
-```
-# Run local webserver
-yarn dev
-
-# Upload the report
-yarn build
-yarn global add surge
-cd report/dist
-surge
-```
+## Development build
+To work on and update the react report app, first a coverage/ report needs to exist.
+1. Run a `patternfly-a11y` CLI command to create the coverage/ report folder.
+1. Run `yarn dev` to launch the react app, it will copy files from the coverage/ report folder into the report/static folder.
 
 PRs and issues are welcome.

@@ -1,13 +1,13 @@
 {
   "name": "@patternfly/patternfly-a11y",
-  "version": "4.3.0-rc.0",
+  "version": "4.3.0-rc.1",
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
     "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
     "dev": "yarn copy && webpack-dev-server --config ./report/webpack.config.js",
-    "build": "yarn copy && webpack --config ./report/webpack.config.js --mode production",
-    "copy": "mkdir -p report/public && cp -R coverage/screenshots report/public && cp coverage/results.json report/public/results.json",
+    "build": "webpack --config ./report/webpack.config.js --mode production",
+    "copy": "mkdir -p report/static && cp -R coverage/screenshots report/static && cp coverage/results.json report/static/results.json",
     "clean": "rm -rf coverage && rm -rf report/public && rm -rf report/dist",
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
