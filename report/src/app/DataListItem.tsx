@@ -34,6 +34,17 @@ const DataListItemInternal = ({
       </a>
     </DataListCell>
   );
+  const urlCell = (
+    <DataListCell key={`url-${key}`} width={2}>
+      <a
+        href={`${val.prefix}${val.url}`}
+        target="_blank"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span id={`url-${key}`}>{val.url}</span>
+      </a>
+    </DataListCell>
+  );
   const shouldToggle = () => {
     if (numIssues > 0) {
       toggle(key);
@@ -59,21 +70,8 @@ const DataListItemInternal = ({
         <DataListItemCells
           key={`cells-${key}`}
           dataListCells={[
-            // <DataListCell
-            //   key={`order-${key}`}
-            //   style={{ cursor: cursorStyle, maxWidth: "80px" }}
-            // >
-            //   <span id={`order-${key}`}>{val.order}</span>
-            // </DataListCell>,
+            urlCell,
             <DataListCell
-              width={2}
-              key={`url-${key}`}
-              style={{ cursor: cursorStyle }}
-            >
-              <span id={`url-${key}`}>{val.url}</span>
-            </DataListCell>,
-            <DataListCell
-              // width={2}
               key={`label-${key}`}
               style={{ cursor: cursorStyle }}
             >
