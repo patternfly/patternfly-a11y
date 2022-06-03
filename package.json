@@ -12,6 +12,7 @@
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
     "test:koku": "yarn clean && ./cli.js --config test/koku-config.js",
+    "test:org": "yarn clean && ./cli.js --config test/pf-org-config.js",
     "test:console": "yarn clean && ./cli.js --config test/console-config.js",
     "test:cli": "node cli.js https://pf4.patternfly.org/components/alert"
   },

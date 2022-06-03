@@ -136,10 +136,10 @@ You can also run a local webserver and/or upload the report.
 Example:
 ```
 # Run local webserver
-yarn global add serve
-serve report/dist
+yarn dev
 
 # Upload the report
+yarn build
 yarn global add surge
 cd report/dist
 surge
