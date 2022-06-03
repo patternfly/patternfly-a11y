@@ -8,7 +8,7 @@
     "dev": "yarn copy && webpack-dev-server --config ./report/webpack.config.js",
     "build": "webpack --config ./report/webpack.config.js --mode production",
     "copy": "mkdir -p report/static && cp -R coverage/screenshots report/static && cp coverage/results.json report/static/results.json",
-    "clean": "rm -rf coverage && rm -rf report/public && rm -rf report/dist",
+    "clean": "rm -rf coverage && rm -rf report/static",
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
     "test:koku": "yarn clean && ./cli.js --config test/koku-config.js",
