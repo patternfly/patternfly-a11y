@@ -25,25 +25,9 @@ async function loginCostManagement({ page, data }) {
   }
 }
 
-async function waitForKoku(page) {
-  // there should be no loading spinner
-  await page.waitForSelector(".co-m-loader", {
-    hidden: true,
-  });
-  await page.waitForSelector(".pf-c-spinner", {
-    hidden: true,
-  });
-  // there should be no skeleton text
-  await page.waitForSelector("[class*='skeleton']", {
-    hidden: true,
-    timeout: 60000,
-  });
-}
-
 module.exports = {
   prefix: "https://console.stage.redhat.com/beta/openshift/cost-management",
   auth: loginCostManagement,
-  waitFor: waitForKoku,
   crawl: false,
   context: 'document.querySelector("main.costManagement")',
   urls: [
@@ -52,6 +36,7 @@ module.exports = {
       label: "overview",
       afterNav: async (page) => {
         await page.waitForSelector(".pf-c-tabs__item-text");
+        await delay(1000);
       },
     },
     {
@@ -59,39 +44,72 @@ module.exports = {
       label: "infrastructure",
       afterNav: async (page) => {
         await page.waitForSelector(".pf-c-tabs__item-text");
+        await delay(1000);
       },
     },
     {
       url: "/ocp",
       label: "openshift details",
+      afterNav: async (page) => {
+        await page.waitForSelector(".tableOverride");
+        await delay(1000);
+      },
     },
     {
       url: "/aws",
       label: "aws details",
+      afterNav: async (page) => {
+        await page.waitForSelector(".tableOverride");
+        await delay(1000);
+      },
     },
     {
       url: "/gcp",
       label: "gcp details",
+      afterNav: async (page) => {
+        await page.waitForSelector(".tableOverride");
+        await delay(1000);
+      },
     },
     {
       url: "/ibm",
       label: "ibm details",
+      afterNav: async (page) => {
+        await page.waitForSelector(".tableOverride, .pf-c-empty-state__content");
+        await delay(1000);
+      },
     },
     {
       url: "/azure",
       label: "azure details",
+      afterNav: async (page) => {
+        await page.waitForSelector(".tableOverride");
+        await delay(1000);
+      },
     },
     {
       url: "/oci",
       label: "oci details",
+      afterNav: async (page) => {
+        await page.waitForSelector(".tableOverride");
+        await delay(1000);
+      },
     },
     {
       url: "/cost-models",
       label: "cost models",
+      afterNav: async (page) => {
+        await page.waitForSelector(".pf-c-table");
+        await delay(1000);
+      },
     },
     {
       url: "/explorer",
       label: "cost explorer",
+      afterNav: async (page) => {
+        await page.waitForSelector(".pf-c-table");
+        await delay(1000);
+      },
     }
     // {
     //   url: "/details/ocp",
