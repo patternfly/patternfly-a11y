@@ -16,7 +16,7 @@ async function loginCostManagement({ page, data }) {
     await page.waitForSelector("#username");
     await page.type("#username", user);
     await page.click("#login-show-step2");
-    await page.waitForSelector("#password");
+    await page.waitForSelector("#rh-password-verification.rh-slide-in.show #password");    await page.waitForSelector("#password");
     await page.type("#password", pass);
     await page.click("#rh-password-verification-submit-button");
     await page.waitForNavigation();
@@ -30,17 +30,14 @@ async function waitForKoku(page) {
   await page.waitForSelector(".co-m-loader", {
     hidden: true,
   });
-  console.log("checked loader");
   await page.waitForSelector(".pf-c-spinner", {
     hidden: true,
   });
-  console.log("checked spinner");
   // there should be no skeleton text
-  // await page.waitForSelector("[class*='skeleton']", {
-  //   hidden: true,
-  //   timeout: 60000,
-  // });
-  // console.log("checked skeleton");
+  await page.waitForSelector("[class*='skeleton']", {
+    hidden: true,
+    timeout: 60000,
+  });
 }
 
 module.exports = {
@@ -52,31 +49,50 @@ module.exports = {
   urls: [
     {
       url: "/",
+      label: "overview",
       afterNav: async (page) => {
-        await waitForKoku(page);
-        console.log("waited for koku");
-        // await page.$$(".pf-c-tabs__item-text");
+        await page.waitForSelector(".pf-c-tabs__item-text");
       },
     },
-    // {
-    //   url: "/",
-    //   label: "infrastructure",
-    //   afterNav: async (page) => {
-    //     const tabs = await page.$$(".pf-c-tabs__item-text");
-    //     // tabs[0] = OpenShift
-    //     // tabs[1] = Infrastructure
-    //     console.log("clicking tab[1]");
-    //     await tabs[1].click();
-    //     await waitForKoku(page);
-    //   },
-    // },
-    // {
-    //   url: "/details/ocp",
-    //   label: "ocp-details",
-    //   afterNav: async (page) => {
-    //     await page.$$(".pf-c-table__text");
-    //   },
-    // },
+    {
+      url: "/?tabKey=1",
+      label: "infrastructure",
+      afterNav: async (page) => {
+        await page.waitForSelector(".pf-c-tabs__item-text");
+      },
+    },
+    {
+      url: "/ocp",
+      label: "openshift details",
+    },
+    {
+      url: "/aws",
+      label: "aws details",
+    },
+    {
+      url: "/gcp",
+      label: "gcp details",
+    },
+    {
+      url: "/ibm",
+      label: "ibm details",
+    },
+    {
+      url: "/azure",
+      label: "azure details",
+    },
+    {
+      url: "/oci",
+      label: "oci details",
+    },
+    {
+      url: "/cost-models",
+      label: "cost models",
+    },
+    {
+      url: "/explorer",
+      label: "cost explorer",
+    }
     // {
     //   url: "/details/ocp",
     //   label: "ocp-details-cost-overview",
