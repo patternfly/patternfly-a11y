@@ -26,7 +26,7 @@
     "patternfly-a11y": "cli.js"
   },
   "dependencies": {
-    "axe-core": "^4.4.1",
+    "axe-core": "^4.8.2",
     "chromedriver": "^119.0.1",
     "commander": "^5.1.0",
     "fs-extra": "^10.0.0",
