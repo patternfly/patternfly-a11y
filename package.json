@@ -29,7 +29,7 @@
     "axe-core": "^4.4.1",
     "chromedriver": "^119.0.1",
     "commander": "^5.1.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "junit-xml": "^1.2.0",
     "puppeteer": "^15.3.0",
     "puppeteer-cluster": "^0.23.0",
