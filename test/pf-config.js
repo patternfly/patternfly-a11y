@@ -8,7 +8,7 @@ async function waitFor(page) {
 }
 
 module.exports = {
-  prefix: 'https://www.patternfly.org/v4',
+  prefix: 'https://www.patternfly.org',
   waitFor,
   crawl: true,
   context: 'document.getElementById("ws-page-main")',
