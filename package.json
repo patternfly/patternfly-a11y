@@ -4,7 +4,7 @@
   "description": "Accessibility utilities for PatternFly.",
   "scripts": {
     "test": "node cli.js --prefix http://localhost:9000 --file ~/src/gatsby-theme-patternfly-org/patternfly-org-demo/.cache/fullscreenPages.json",
-    "start": "webpack-dev-server --config ./test/app/webpack.config.js --open",
+    "start": "webpack-dev-server --config ./report/webpack.config.js --open",
     "dev": "yarn copy && webpack-dev-server --config ./report/webpack.config.js",
     "build": "webpack --config ./report/webpack.config.js --mode production",
     "copy": "mkdir -p report/static && cp -R coverage/screenshots report/static && cp coverage/results.json report/static/results.json",
