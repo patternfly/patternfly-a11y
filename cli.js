@@ -8,7 +8,7 @@ const { writeCoverage } = require("./lib/reporter");
 
 program
   .version(require("./package.json").version)
-  .arguments("[urls or urlFile] [otherUrls...]")
+  .arguments("[urls/urlFile] [otherUrls...]")
   .description("Test URL(s) using puppeteer and axe.")
   .option("-c, --config <file>", "Path to config file")
   .option(

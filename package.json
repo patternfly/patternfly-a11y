@@ -22,13 +22,11 @@
   },
   "author": "Red Hat",
   "license": "MIT",
-  "bin": {
-    "patternfly-a11y": "cli.js"
-  },
+  "bin": "cli.js",
   "dependencies": {
-    "axe-core": "^4.8.2",
+    "axe-core": "^4.10.0",
     "chromedriver": "^119.0.1",
-    "commander": "^5.1.0",
+    "commander": "^11.1.0",
     "fs-extra": "^10.1.0",
     "junit-xml": "^1.2.0",
     "puppeteer": "^15.5.0",
