@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@patternfly/react-charts": "^6.0.0",
-    "@patternfly/react-core": "^4.0.0",
+    "@patternfly/react-core": "^4.278.1",
     "@types/react": "^17.0.80",
     "@types/react-dom": "^17.0.25",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
