@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "axe-core": "^4.8.2",
-    "chromedriver": "^119.0.1",
+    "chromedriver": "^127.0.3",
     "commander": "^5.1.0",
     "fs-extra": "^10.1.0",
     "junit-xml": "^1.2.0",
