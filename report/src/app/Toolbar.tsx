@@ -62,13 +62,11 @@ export const Toolbar = ({
         <SortSelect onSelect={onSelect} />
       </ToolbarItem>
       <ToolbarItem>
-        <Button
+        <Button icon={sortIncreasing ? <SortIncreasing /> : <SortDecreasing />}
           variant="plain"
           aria-label="Sort direction"
           onClick={onSortDirectionClick}
-        >
-          {sortIncreasing ? <SortIncreasing /> : <SortDecreasing />}
-        </Button>
+         />
       </ToolbarItem>
       <ToolbarItem>
           <SeveritySelect onSelect={onSeveritySelect} />

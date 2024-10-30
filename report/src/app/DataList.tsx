@@ -1,5 +1,5 @@
 import React from "react";
-import { DataList, TextContent, Text, Bullseye } from "@patternfly/react-core";
+import { DataList, Content, Bullseye } from "@patternfly/react-core";
 import { Toolbar } from "./Toolbar";
 import { Infobar } from "./Infobar";
 import { DataListItem } from "./DataListItem";
@@ -175,9 +175,9 @@ export class ExpandableDataList extends React.Component<
     return (
       <React.Fragment>
         <Bullseye style={{ padding: "15px" }}>
-          <TextContent>
-            <Text component="h1">Accessibility report</Text>
-          </TextContent>
+          <Content>
+            <Content component="h1">Accessibility report</Content>
+          </Content>
         </Bullseye>
         <Infobar
           axeOptions={
