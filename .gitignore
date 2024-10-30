@@ -2,6 +2,7 @@ node_modules
 coverage
 report/static/screenshots
 report/static/results.json
+report/dist
 .DS_Store
 .cache
 .tmp
