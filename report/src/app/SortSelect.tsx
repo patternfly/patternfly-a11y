@@ -14,7 +14,10 @@ const SortSelectInternal = ({ onSelect }) => {
   return (
     <SimpleSelect
       initialOptions={options}
-      onSelect={(_ev, selection) => setSelected(String(selection))}
+      onSelect={(_ev, selection) => {
+        onSelect(_ev, selection);
+        setSelected(String(selection))
+      }}
     />
   );
 };
