@@ -1,31 +1,24 @@
 import React from "react";
-import { Select, SelectOption } from "@patternfly/react-core";
+import {
+	SimpleSelect,
+  SimpleSelectOption
+} from '@patternfly/react-templates';
 
 const SortSelectInternal = ({ onSelect }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
   const [selected, setSelected] = React.useState("Sort by URL");
-  const onToggle = (isOpen) => {
-    setIsOpen(isOpen);
-  };
-  const onSortSelect = (event, selection) => {
-    setIsOpen(false);
-    setSelected(selection);
-    onSelect(event, selection);
-  };
+
+  const options: SimpleSelectOption[] = [
+    { content: 'Sort by URL', value: 'Sort by URL', selected: selected === 'Sort by URL' },
+    { content: 'Sort by Issues', value: 'Sort by Issues', selected: selected === 'Sort by Issues' }
+  ];
   return (
-    <Select
-      onToggle={onToggle}
-      onSelect={onSortSelect}
-      selections={selected}
-      isOpen={isOpen}
-      direction="down"
-      placeholderText="Sort by"
-      menuAppendTo={document.body}
-    >
-      {/* <SelectOption value="Sort by Order" /> */}
-      <SelectOption value="Sort by URL" />
-      <SelectOption value="Sort by Issues" />
-    </Select>
+    <SimpleSelect
+      initialOptions={options}
+      onSelect={(_ev, selection) => {
+        onSelect(_ev, selection);
+        setSelected(String(selection))
+      }}
+    />
   );
 };
 SortSelectInternal.displayName = "SortSelectInternal";

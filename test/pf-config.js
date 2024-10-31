@@ -11,11 +11,61 @@ module.exports = {
   prefix: 'https://www.patternfly.org',
   waitFor,
   crawl: true,
-  context: 'document.getElementById("ws-page-main")',
-  ignoreRules: 'color-contrast,page-has-heading-one,scrollable-region-focusable,bypass',
-  ignoreIncomplete: false,
-  // tree-table examples are skipped because aria-level, aria-posinset, aria-setsize are intentionally
-  // being used slightly unconventionally in those examples
-  skip: /^\/charts\/|tree-table$/,
-  urls: ['/']
+  urls: [
+    {
+      url: '/',
+      crawl: false,
+      label: 'home fullscreen nav expanded',
+      viewportDimensions: {width: 1920, height: 1080},
+      afterNav: async (page) => {
+        await page.click("button#nav-toggle");
+      }
+    },
+    {
+      url: '/',
+      crawl: false,
+      label: 'home fullscreen nav collapsed',
+      viewportDimensions: {width: 1920, height: 1080}
+    },
+    {
+      url: '/',
+      crawl: false,
+      label: 'home mobile nav collapsed',
+      viewportDimensions: {width: 400, height: 900}
+    },
+    {
+      url: '/',
+      crawl: false,
+      label: 'home mobile nav expanded',
+      viewportDimensions: {width: 400, height: 900},
+      afterNav: async (page) => {
+        await page.click("button#nav-toggle");
+      }
+    },
+    // {
+    //   url: '/',
+    //   label: 'page content',
+    //   context: 'document.getElementById("ws-page-main")'
+    // },
+    {
+      url: '/components/table',
+      crawl: false,
+      label: 'composable table content on mobile screen',
+      viewportDimensions: {width: 400, height: 900},
+    },
+    {
+      url: '/components/table/react-deprecated',
+      crawl: false,
+      label: 'legacy table content on mobile screen',
+      viewportDimensions: {width: 400, height: 900},
+    },
+    {
+      url: '/components/table/html',
+      crawl: false,
+      label: 'html table content on mobile screen',
+      viewportDimensions: {width: 400, height: 900},
+    }
+  ],
+  ignoreIncomplete: true,
+  skip: '(mailto)|(/(react|react-next|react-demos|react-deprecated|html|html-demos)/.+)|(/react$)'
 };

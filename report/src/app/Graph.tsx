@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  Chart,
-  ChartAxis,
-  ChartBar,
-  ChartGroup,
-  ChartVoronoiContainer,
-} from "@patternfly/react-charts";
+	Chart,
+	ChartAxis,
+	ChartBar,
+	ChartGroup,
+	ChartVoronoiContainer
+} from '@patternfly/react-charts/victory';
 
 export const GraphInternal = ({ sitesWithoutIssuesLength, sitesWithIssuesLength }) => (
   <Chart

@@ -1,5 +1,5 @@
 import React from "react";
-import { DataList, TextContent, Text, Bullseye } from "@patternfly/react-core";
+import { DataList, Content, Bullseye } from "@patternfly/react-core";
 import { Toolbar } from "./Toolbar";
 import { Infobar } from "./Infobar";
 import { DataListItem } from "./DataListItem";
@@ -90,7 +90,7 @@ export class ExpandableDataList extends React.Component<
     });
   };
 
-  onSeveritySelect = (event, selection) => {
+  onSeveritySelect = (selection) => {
     this.setState({
       severitySelections: selection,
     });
@@ -122,12 +122,12 @@ export class ExpandableDataList extends React.Component<
           : null,
     }));
   };
-  handleChange = (checked, event) => {
+  handleChange = (event, checked) => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     this.setState({ hideScreenshots: value });
   };
-  handleExpandAll = (checked, event) => {
+  handleExpandAll = (event, checked) => {
     const target = event.target;
     const shouldExpandAll =
       target.type === "checkbox" ? target.checked : target.value;
@@ -136,7 +136,7 @@ export class ExpandableDataList extends React.Component<
       expanded: shouldExpandAll ? Object.keys(this.props.report) : [],
     });
   };
-  handlePossibleIssues = (checked, event) => {
+  handlePossibleIssues = (event, checked) => {
     const target = event.target;
     const includePossibleIssues =
       target.type === "checkbox" ? target.checked : target.value;
@@ -175,9 +175,9 @@ export class ExpandableDataList extends React.Component<
     return (
       <React.Fragment>
         <Bullseye style={{ padding: "15px" }}>
-          <TextContent>
-            <Text component="h1">Accessibility report</Text>
-          </TextContent>
+          <Content>
+            <Content component="h1">Accessibility report</Content>
+          </Content>
         </Bullseye>
         <Infobar
           axeOptions={
@@ -222,14 +222,14 @@ export class ExpandableDataList extends React.Component<
               // filter out issues that do not match current severity selection
               val.filteredViolations = val.violations ? val.violations.filter((violation) => this.state.severitySelections.includes(violation.impact)) : [];
               val.filteredIncomplete = val.incomplete ? val.incomplete.filter((incomplete) => this.state.severitySelections.includes(incomplete.impact)) : [];
-              const numViolations = val.filteredViolations?.length || 0; 
-              const numIncomplete = val.filteredIncomplete?.length || 0; 
+              const numViolations = val.filteredViolations?.length || 0;
+              const numIncomplete = val.filteredIncomplete?.length || 0;
               if (numViolations + numIncomplete === 0) {
                 if (this.state.severitySelections.includes("ok")) {
                   return val;
                 }
                 return null;
-              } 
+              }
               return val;
             })
             .sort((a: any, b: any) => {

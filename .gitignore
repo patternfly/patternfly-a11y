@@ -2,3 +2,22 @@ node_modules
 coverage
 report/static/screenshots
 report/static/results.json
+report/dist
+.DS_Store
+.cache
+.tmp
+.eslintcache
+.out
+.changelog
+
+# IDEs and editors
+.idea
+.project
+.classpath
+.c9
+*.launch
+.settings
+*.sublime-workspace
+.history
+.vscode
+.yo-rc.json
