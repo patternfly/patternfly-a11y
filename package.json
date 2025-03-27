@@ -24,7 +24,7 @@
   "license": "MIT",
   "bin": "cli.js",
   "dependencies": {
-    "axe-core": "^4.10.2",
+    "axe-core": "^4.10.3",
     "chromedriver": "^130.0.1",
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
