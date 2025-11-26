@@ -35,6 +35,8 @@ Options:
   -h, --help                   display help for command
 ```
 
+For a list of valid tags to pass in, see the [axe-core tags documentation](https://www.deque.com/axe/core-documentation/api-documentation/#axecore-tags).
+
 ## Getting started
 
 `yarn add @patternfly/patternfly-a11y`
