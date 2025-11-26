@@ -3,9 +3,10 @@
 This is a CLI tool developed for [patternfly-react](https://github.com/patternfly/patternfly-react/), [patternfly-next](https://github.com/patternfly/patternfly-next/), and [patternfly-org](https://github.com/patternfly/patternfly-org/) to run [axe](https://www.deque.com/axe/) in Selenium on a list of urls. It has options suited to our needs but should work as an integration test for any project.
 
 It outputs a coverage directory with a webpack-built report, as well as:
-  - report.json: full axe output per-url
-  - report.xml: junit coverage grouped into test cases
-  - report.html: more readable html report of report.xml
+
+- report.json: full axe output per-url
+- report.xml: junit coverage grouped into test cases
+- report.html: more readable html report of report.xml
 
 ## Usage
 
@@ -28,7 +29,7 @@ Options:
   --no-screenshots             Whether to save screenshots of visited pages
   -ir, --ignore-rules <rules>  Axe: Comma-separated list of error ids to ignore (default: "color-contrast")
   -iI, --ignore-incomplete     Axe: Whether to ignore incomplete errors (default: false)
-  -t, --tags <tags>            Axe: Comma-separated list of accessibility (WCAG) tags to run against (default: "wcag2a,wcag2aa")
+  -t, --tags <tags>            Axe: Comma-separated list of accessibility (WCAG) tags to run against (default: "wcag22aa")
   -ctx, --context <context>    Axe: Context to run in, defaults to document, can be set to a different selector, i.e. document.getElementById("content")
                                (default: "document")
   -h, --help                   display help for command
@@ -110,14 +111,18 @@ module.exports = {
 ```
 
 ## Production build
+
 If updating the source under the report/ directory, create a new webpack build by running `yarn build`, which outputs the site to report/dist.
 Whenever the patternfly-a11y CLI tool is run, it generates a coverage folder at the root, and copies the report/dist files into it, so that the full report can be served up.
 
 ### Serve/view production build (example)
+
 npx serve coverage
 
 ## Development build
+
 To work on and update the react report app, first a coverage/ report needs to exist.
+
 1. Run a `./cli.js` CLI command to create the coverage/ report folder.
 1. Run `yarn dev` to launch the react app, it will copy files from the coverage/ report folder into the report/static folder.
 
