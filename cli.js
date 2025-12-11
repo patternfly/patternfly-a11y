@@ -16,7 +16,11 @@ program
     "Prefix for listed urls (like https://localhost:9000)"
   )
   .option("-cr, --crawl", "Whether to crawl URLs for more URLs", false)
-  .option("--no-code-on-fail", "By default, exit code 1 is returned on test failures, and 2 if there are incomplete tests, this disables that", false)
+  .option(
+    "--no-code-on-fail",
+    "By default, exit code 1 is returned on test failures, and 2 if there are incomplete tests, this disables that",
+    false
+  )
   .option("-s, --skip <regex>", "Regex of pages to skip")
   .option(
     "-a, --aggregate",
@@ -37,7 +41,7 @@ program
   .option(
     "-t, --tags <tags>",
     "Axe: Comma-separated list of accessibility (WCAG) tags to run against",
-    "wcag2a,wcag2aa"
+    "wcag22aa"
   )
   .option(
     "-ctx, --context <context>",
