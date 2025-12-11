@@ -4,13 +4,14 @@
  * @param page page from puppeteer
  */
 async function waitFor(page) {
-  await page.waitForSelector('#root > *');
+  // Wait for network to be idle and page to be fully rendered
+  await page.waitForNetworkIdle({ timeout: 30000 });
 }
 
 module.exports = {
-  prefix: 'http://localhost:5000/v4',
+  prefix: 'https://www.patternfly.org',
   waitFor,
-  crawl: true,
+  crawl: false,
   urls: [
     {
       url: '/',
