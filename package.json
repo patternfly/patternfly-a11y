@@ -30,7 +30,7 @@
     "fs-extra": "^11.3.2",
     "junit-xml": "^1.2.0",
     "puppeteer": "^24.15.0",
-    "puppeteer-cluster": "^0.24.0",
+    "puppeteer-cluster": "^0.25.0",
     "xmldoc": "^2.0.2"
   },
   "peerDependencies": {
