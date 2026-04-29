@@ -31,7 +31,7 @@
     "junit-xml": "^1.2.0",
     "puppeteer": "^24.15.0",
     "puppeteer-cluster": "^0.24.0",
-    "xmldoc": "^2.0.2"
+    "xmldoc": "^2.0.3"
   },
   "peerDependencies": {
     "victory-bar": "^37.3.6",
