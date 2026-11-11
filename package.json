@@ -25,11 +25,11 @@
   "bin": "cli.js",
   "dependencies": {
     "axe-core": "^4.11.0",
-    "chromedriver": "^142.0.0",
+    "chromedriver": "^148.0.3",
     "commander": "^12.1.0",
     "fs-extra": "^11.3.2",
     "junit-xml": "^1.2.0",
-    "puppeteer": "^24.15.0",
+    "puppeteer": "^25.0.2",
     "puppeteer-cluster": "^0.24.0",
     "xmldoc": "^2.0.2"
   },
