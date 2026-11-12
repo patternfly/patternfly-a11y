@@ -9,6 +9,7 @@
     "build": "webpack --config ./report/webpack.config.js --mode production",
     "copy": "mkdir -p report/static && cp -R coverage/screenshots report/static && cp coverage/results.json report/static/results.json",
     "clean": "rm -rf coverage && rm -rf report/static",
+    "test:unit": "node --test test/ignore-attribute.test.js test/no-code-on-fail.test.js",
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",
     "test:os": "yarn clean && ./cli.js --config test/os-config.js",
     "test:koku": "yarn clean && ./cli.js --config test/koku-config.js",

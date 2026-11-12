@@ -18,8 +18,7 @@ program
   .option("-cr, --crawl", "Whether to crawl URLs for more URLs", false)
   .option(
     "--no-code-on-fail",
-    "By default, exit code 1 is returned on test failures, and 2 if there are incomplete tests, this disables that",
-    false
+    "By default, exit code 1 is returned on test failures, and 2 if there are incomplete tests, this disables that"
   )
   .option("-s, --skip <regex>", "Regex of pages to skip")
   .option(
