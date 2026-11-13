@@ -62,3 +62,8 @@ npm publish
 npm view @patternfly/patternfly-a11y
 ```
 Also check https://www.npmjs.com/package/@patternfly/patternfly-a11y
+
+**12. Update npm tags:**
+```bash
+npm dist-tag add @patternfly/patternfly-a11y@X.Y.Z latest
+```
