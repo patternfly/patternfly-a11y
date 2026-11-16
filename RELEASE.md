@@ -38,7 +38,8 @@ Check that:
 - `cli.js` is included ✓
 - `lib/` directory is included ✓
 - `README.md` is included ✓
-- `coverage/`, `report/`, and `test/` are excluded ✓
+- `report/dist/` is included ✓ (built automatically by the `prepack` script)
+- `coverage/`, `test/`, and the `report/` sources are excluded ✓
 
 **8. Dry-run the publish:**
 ```bash
