@@ -37,6 +37,18 @@ Options:
 
 For a list of valid tags to pass in, see the [axe-core tags documentation](https://www.deque.com/axe/core-documentation/api-documentation/#axecore-tags).
 
+### Ignore specific rules on individual elements
+
+Add a `data-a11y-ignore` attribute to an element to ignore one or more axe rule IDs for that element:
+
+```html
+<div class="third-party-widget" data-a11y-ignore="color-contrast, aria-allowed-attr">
+  ...
+</div>
+```
+
+Separate multiple rule IDs with commas. Matching findings on that element are removed from the report; the same rules continue to run on other elements. This applies to both violations and incomplete results. The attribute does not disable axe rules globally; use `ignoreRules` for that.
+
 ## Getting started
 
 `yarn add @patternfly/patternfly-a11y`
