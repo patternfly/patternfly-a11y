@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --config ./report/webpack.config.js --open",
     "dev": "yarn copy && webpack-dev-server --config ./report/webpack.config.js",
     "build": "webpack --config ./report/webpack.config.js --mode production",
+    "prepack": "yarn build",
     "copy": "mkdir -p report/static && cp -R coverage/screenshots report/static && cp coverage/results.json report/static/results.json",
     "clean": "rm -rf coverage && rm -rf report/static",
     "test:pf": "yarn clean && ./cli.js --config test/pf-config.js",

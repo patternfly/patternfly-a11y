@@ -38,7 +38,8 @@ Check that:
 - `cli.js` is included ✓
 - `lib/` directory is included ✓
 - `README.md` is included ✓
-- `coverage/`, `report/`, and `test/` are excluded ✓
+- `report/dist/` is included ✓ (built automatically by the `prepack` script)
+- `coverage/`, `test/`, and the `report/` sources are excluded ✓
 
 **8. Dry-run the publish:**
 ```bash
@@ -62,3 +63,8 @@ npm publish
 npm view @patternfly/patternfly-a11y
 ```
 Also check https://www.npmjs.com/package/@patternfly/patternfly-a11y
+
+**12. Update npm tags:**
+```bash
+npm dist-tag add @patternfly/patternfly-a11y@X.Y.Z latest
+```
